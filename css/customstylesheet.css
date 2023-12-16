@@ -1,0 +1,16 @@
+﻿footer a {
+    color: #ff6a00;
+    text-decoration: none !important;
+}
+
+    footer a:hover {
+        color: #00ffff;
+    }
+
+#footer1 {
+    background: #4cff00;
+}
+
+#footer2 {
+    background: #d3f18b;
+}
