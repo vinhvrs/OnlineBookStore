@@ -34,7 +34,7 @@
                                     <div class="col-md-6">
                                         <label>Full Name</label>
                                         <div class="form-group">
-                                            <asp:TextBox CssClass="form-control" ID="TextBox1" runat="server" placeholder ="Member ID"> </asp:TextBox>                                
+                                            <asp:TextBox CssClass="form-control" ID="TextBox1" runat="server" placeholder ="Member ID" OnTextChanged="TextBox1_TextChanged"> </asp:TextBox>                                
                                 </div>                               
                             </div>
                                     <div class="col-md-6">
@@ -143,12 +143,12 @@
                             <div class="row">
                                     <div class="col">
                                         <div class="form-group">
-                                            <asp:Button class="btn btn-success btn-block btn-lg" ID="Button1" runat="server" Text="log In" />
+                                            <asp:Button class="btn btn-success btn-block btn-lg" ID="Button1" runat="server" Text="Log In" OnClick="Button1_Click" />
                                         </div>
 
                                         <div class="form-group">
                                           <a href="usersignup.aspx"><input class="btn btn-info btn-block" ID="Button2" type="button" Value="Sign Up" /></a>
-                                        </div>
+                                        </div> <%-- this should be a button like Login button --%>
                             </div>
                           </div>
 

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace E_Library
+namespace OnlineBookstore
 {
 
 
