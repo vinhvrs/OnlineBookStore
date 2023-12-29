@@ -1,18 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.Routing;
-using Microsoft.AspNet.FriendlyUrls;
+using System.Web.Optimization;
 
 namespace OnlineBookstore
 {
-    public static class RouteConfig
+    public class BundleConfig
     {
-        public static void RegisterRoutes(RouteCollection routes)
+        public static void RegisterBundles(BundleCollection bundles)
         {
-            var settings = new FriendlyUrlSettings();
-            settings.AutoRedirectMode = RedirectMode.Permanent;
-            routes.EnableFriendlyUrls(settings);
+            // Scripts bundle
+            bundles.Add(new ScriptBundle("~/bundles/WebFormsJs").Include(
+                "~/Scripts/WebForms/WebForms.js",
+                "~/Scripts/WebForms/WebUIValidation.js",
+                "~/Scripts/WebForms/MenuStandards.js",
+                "~/Scripts/WebForms/Focus.js",
+                "~/Scripts/WebForms/GridView.js",
+                "~/Scripts/WebForms/DetailsView.js",
+                "~/Scripts/WebForms/TreeView.js",
+                "~/Scripts/WebForms/WebParts.js"));
+
+            // MsAjax bundle
+            bundles.Add(new ScriptBundle("~/bundles/MsAjaxJs").Include(
+                "~/Scripts/WebForms/MsAjax/MicrosoftAjax.js",
+                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxApplicationServices.js",
+                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxTimer.js",
+                "~/Scripts/WebForms/MsAjax/MicrosoftAjaxWebForms.js"));
+
+            // Modernizr bundle
+            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
+                "~/Scripts/modernizr-*"));
         }
     }
 }
