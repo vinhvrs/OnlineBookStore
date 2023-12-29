@@ -6,7 +6,7 @@
  <selection>
     <div>
         <center>
-    <img src="imgs/home-bg.png" class="img-fluid" />
+    <img src="imgs/home-bg1.png"" class="img-fluid" />
 </selection>
 <selection>
     <div class="container">
@@ -23,20 +23,20 @@
 
         <div class="col-md-4 mx-auto">
             <center>
-            <img width="150px" src="imgs/digital-inventory.png" />
+            <img width="150px" src="imgs/digital-inventory1.png" />
             <h4>Digital Book Inventory</h4>
             </div>
 
             <div class="col-md-4 mx-auto">
                 <center>
-                <img width="150px" src="imgs/search-onlie.png" />
+                <img width="150px" src="imgs/search-onlie1.png" />
                 <h4>Search Books</h4>
                 </center>
                 </div>
 
             <div class="col-md-4 mx-auto">
                 <center>
-                <img width="150px" src="imgs/defaulters-list.png" />
+                <img width="150px" src="imgs/defaulters-list1.png" />
                 <h4>Defaulter List</h4>
                 </center>
                 </div>
@@ -54,14 +54,14 @@
 
 <div class="col-md-4 mx-auto">
     <center>
-        <img width="150px" src="imgs/sign-up.png" />
+        <img width="150px" src="imgs/sign-up1.png" />
     <h4>Sign Up</h4>
     </div>
 
 
     <div class="col-md-4 mx-auto">
         <center>
-        <img width="150px" src="imgs/library.png" />
+        <img width="150px" src="imgs/library1.png" />
         <h4>Visit Us</h4>
         </center>
         </div>

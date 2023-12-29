@@ -10,61 +10,62 @@ using System.Web.UI.WebControls;
 
 namespace OnlineBookstore
 {
-    public partial class adminauthormanagement : System.Web.UI.Page
+    public partial class adminpublishmanagement : System.Web.UI.Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             GridView1.DataBind();
         }
-        // add button click
+
+        // add publisher
         protected void Button2_Click(object sender, EventArgs e)
         {
-            if (checkIfAuthorExists())
+            if (checkPublisherExists())
             {
-                Response.Write("<script>alert('Author with this ID already Exist. You cannot add another Author with the same Author ID');</script>");
+                Response.Write("<script>alert('Publisher Already Exist with this ID.');</script>");
             }
             else
             {
-                addNewAuthor();
+                addNewPublisher();
             }
         }
-        // update button click
+        // update publisher
         protected void Button3_Click(object sender, EventArgs e)
         {
-            if (checkIfAuthorExists())
+            if (checkPublisherExists())
             {
-                updateAuthor();
-
+                updatePublisherByID();
             }
             else
             {
-                Response.Write("<script>alert('Author does not exist');</script>");
+                Response.Write("<script>alert('Publisher with this ID does not exist');</script>");
             }
         }
-        // delete button click
+        // delete publisher
         protected void Button4_Click(object sender, EventArgs e)
         {
-            if (checkIfAuthorExists())
+            if (checkPublisherExists())
             {
-                deleteAuthor();
-
+                deletePublisherByID();
             }
             else
             {
-                Response.Write("<script>alert('Author does not exist');</script>");
+                Response.Write("<script>alert('Publisher with this ID does not exist');</script>");
             }
         }
-        // GO button click
         protected void Button1_Click(object sender, EventArgs e)
         {
-            getAuthorByID();
+            getPublisherByID();
         }
 
 
 
-        // user defined function
-        void getAuthorByID()
+
+        // user defined functions
+
+        void getPublisherByID()
         {
             try
             {
@@ -74,7 +75,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from author_master_tbl where author_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * from publisher_master_table where publisher_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -85,7 +86,7 @@ namespace OnlineBookstore
                 }
                 else
                 {
-                    Response.Write("<script>alert('Invalid Author ID');</script>");
+                    Response.Write("<script>alert('Publisher with this ID does not exist.');</script>");
                 }
 
 
@@ -97,8 +98,7 @@ namespace OnlineBookstore
             }
         }
 
-
-        void deleteAuthor()
+        bool checkPublisherExists()
         {
             try
             {
@@ -108,88 +108,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("DELETE from author_master_tbl WHERE author_id='" + TextBox1.Text.Trim() + "'", con);
-
-                cmd.ExecuteNonQuery();
-                con.Close();
-                Response.Write("<script>alert('Author Deleted Successfully');</script>");
-                clearForm();
-                GridView1.DataBind();
-
-            }
-            catch (Exception ex)
-            {
-                Response.Write("<script>alert('" + ex.Message + "');</script>");
-            }
-        }
-
-        void updateAuthor()
-        {
-            try
-            {
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("UPDATE author_master_tbl SET author_name=@author_name WHERE author_id='" + TextBox1.Text.Trim() + "'", con);
-
-                cmd.Parameters.AddWithValue("@author_name", TextBox2.Text.Trim());
-
-                cmd.ExecuteNonQuery();
-                con.Close();
-                Response.Write("<script>alert('Author Updated Successfully');</script>");
-                clearForm();
-                GridView1.DataBind();
-            }
-            catch (Exception ex)
-            {
-                Response.Write("<script>alert('" + ex.Message + "');</script>");
-            }
-        }
-
-
-        void addNewAuthor()
-        {
-            try
-            {
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("INSERT INTO author_master_tbl(author_id,author_name) values(@author_id,@author_name)", con);
-
-                cmd.Parameters.AddWithValue("@author_id", TextBox1.Text.Trim());
-                cmd.Parameters.AddWithValue("@author_name", TextBox2.Text.Trim());
-
-                cmd.ExecuteNonQuery();
-                con.Close();
-                Response.Write("<script>alert('Author added Successfully');</script>");
-                clearForm();
-                GridView1.DataBind();
-            }
-            catch (Exception ex)
-            {
-                Response.Write("<script>alert('" + ex.Message + "');</script>");
-            }
-        }
-
-
-
-        bool checkIfAuthorExists()
-        {
-            try
-            {
-                SqlConnection con = new SqlConnection(strcon);
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                SqlCommand cmd = new SqlCommand("SELECT * from author_master_tbl where author_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * from publisher_master_table where publisher_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -212,20 +131,99 @@ namespace OnlineBookstore
             }
         }
 
-        void clearForm()
+        void addNewPublisher()
         {
-            TextBox1.Text = "";
-            TextBox2.Text = "";
+            try
+            {
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("INSERT INTO publisher_master_table(publisher_id,publisher_name) values(@publisher_id,@publisher_name)", con);
+
+                cmd.Parameters.AddWithValue("@publisher_id", TextBox1.Text.Trim());
+                cmd.Parameters.AddWithValue("@publisher_name", TextBox2.Text.Trim());
+
+
+                cmd.ExecuteNonQuery();
+                con.Close();
+                Response.Write("<script>alert('Publisher added successfully.');</script>");
+                GridView1.DataBind();
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
         }
 
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        public void updatePublisherByID()
         {
+            try
+            {
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
 
+
+                SqlCommand cmd = new SqlCommand("update publisher_master_table set publisher_name=@publisher_name WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
+                cmd.Parameters.AddWithValue("@publisher_name", TextBox2.Text.Trim());
+                int result = cmd.ExecuteNonQuery();
+                con.Close();
+                if (result > 0)
+                {
+
+                    Response.Write("<script>alert('Publisher Updated Successfully');</script>");
+                    GridView1.DataBind();
+                }
+                else
+                {
+                    Response.Write("<script>alert('Publisher ID does not Exist');</script>");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
         }
 
-        protected void TextBox1_TextChanged(object sender, EventArgs e)
+        public void deletePublisherByID()
         {
+            try
+            {
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
 
+
+                SqlCommand cmd = new SqlCommand("Delete from publisher_master_table WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
+                int result = cmd.ExecuteNonQuery();
+                con.Close();
+                if (result > 0)
+                {
+
+                    Response.Write("<script>alert('Publisher Deleted Successfully');</script>");
+                    GridView1.DataBind();
+                }
+                else
+                {
+                    Response.Write("<script>alert('Publisher ID does not Exist');</script>");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
         }
+
+
     }
 }
