@@ -59,6 +59,10 @@
                      <div class="col-md-4">
                         <label>State</label>
                         <div class="form-group">
+
+                             <asp:DropDownList CssClass="form-control" ID="DropDownList1" runat="server">
+     <asp:ListItem Text="Select" Value="Select" />
+
     <asp:ListItem Text="Select" Value="Select" />
     <asp:ListItem Text="An Giang" Value="An Giang" />
     <asp:ListItem Text="Ba Ria - Vung Tau" Value="Ba Ria - Vung Tau" />
@@ -171,7 +175,7 @@
                   <div class="row">
                      <div class="col">
                         <div class="form-group">
-                           <asp:Button class="btn btn-primary btn-block btn-lg" ID="Button1" runat="server" Text="Sign Up" />
+
                         </div>
                      </div>
                   </div>
@@ -183,3 +187,4 @@
    </div>
 
 </asp:Content>
+

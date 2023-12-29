@@ -225,7 +225,7 @@ namespace OnlineBookstore
 
         protected void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(TextBox1.Text.Trim());
+
         }
     }
 }
