@@ -73,6 +73,98 @@
     return null;
   };
 
+
+                         const getElementFromSelector = selector => {
+    return selector ? document.querySelector(selector) : null;
+  };
+
+  const getTransitionDurationFromElement = element => {
+    if (!element) {
+      return 0;
+    }
+
+    // Get the transition duration of the element in seconds
+    let transitionDuration = window.getComputedStyle(element).getPropertyValue('transition-duration');
+    let transitionDelay = window.getComputedStyle(element).getPropertyValue('transition-delay');
+
+    const floatTransitionDuration = parseFloat(transitionDuration);
+    const floatTransitionDelay = parseFloat(transitionDelay);
+
+    // Return 0 if there is no transition or if the transition is in progress
+    if (!floatTransitionDuration && !floatTransitionDelay) {
+      return 0;
+    }
+
+    // Calculate the total duration including delay
+    const duration = (floatTransitionDuration + floatTransitionDelay) * MILLISECONDS_MULTIPLIER;
+
+    return Math.round(duration);
+  };
+
+  const triggerTransitionEnd = element => {
+    const evt = document.createEvent('HTMLEvents');
+    evt.initEvent(TRANSITION_END, true, true);
+    element.dispatchEvent(evt);
+  };
+
+  const isElement = obj => {
+    return (obj[0] || obj).nodeType;
+  };
+
+  const emulateTransitionEnd = (element, duration) => {
+    let called = false;
+    const durationPadding = 5;
+    const emulatedDuration = duration + durationPadding;
+
+    function transitionEndHandler() {
+      if (called) return;
+      called = true;
+      element.removeEventListener(TRANSITION_END, transitionEndHandler);
+    }
+
+    element.addEventListener(TRANSITION_END, transitionEndHandler);
+
+    setTimeout(() => {
+      if (!called) {
+        triggerTransitionEnd(element);
+      }
+    }, emulatedDuration);
+  };
+
+  // TODO: Add more utility functions as needed
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.2.3): dom/manipulator.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  // TODO: Add manipulator functions here
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.2.3): dom/selector-engine.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  // TODO: Add selector engine functions here
+
+  // Return the public utility functions
+  return {
+    getUID,
+    getSelector,
+    getSelectorFromElement,
+    getElementFromSelector,
+    getTransitionDurationFromElement,
+    triggerTransitionEnd,
+    emulateTransitionEnd,
+    isElement,
+    // TODO: Add other utility functions here
+  };
+}));
+
   const getElementFromSelector = element => {
     const selector = getSelector(element);
     return selector ? document.querySelector(selector) : null;
@@ -1070,8 +1162,215 @@
       }
 
       return [];
+    }
+
+   
+        next(element, selector) {
+      let next = element.nextElementSibling;
+
+      while (next) {
+        if (next.matches(selector)) {
+          return [next];
+        }
+
+        next = next.nextElementSibling;
+      }
+
+      return [];
     },
 
+    closest(element, selector) {
+      return element.closest(selector);
+    },
+
+    findIndex(element) {
+      return element ? Array.from(element.parentNode.children).indexOf(element) : -1;
+    },
+
+    remove(element) {
+      if (element.parentNode) {
+        element.parentNode.removeChild(element);
+      }
+    }
+  };
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.2.3): index.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  const NAME$f = 'carousel';
+  const DATA_KEY$a = 'bs.carousel';
+  const EVENT_KEY$b = `.${DATA_KEY$a}`;
+  const DATA_API_KEY$7 = '.data-api';
+  const ARROW_LEFT_KEY = 'ArrowLeft';
+  const ARROW_RIGHT_KEY = 'ArrowRight';
+  const TOUCHEVENT_COMPAT_WAIT = 500; // Time for mouse compat events to fire after touch
+  const SWIPE_THRESHOLD = 40;
+  const Default$8 = {
+    interval: 5000,
+    keyboard: true,
+    slide: false,
+    pause: 'hover',
+    wrap: true,
+    touch: true
+  };
+  const DefaultType$8 = {
+    interval: '(number|boolean)',
+    keyboard: 'boolean',
+    slide: '(boolean|string)',
+    pause: '(string|boolean)',
+    wrap: 'boolean',
+    touch: 'boolean'
+  };
+  const ORDER_NEXT = 'next';
+  const ORDER_PREV = 'prev';
+  const DIRECTION_LEFT = 'left';
+  const DIRECTION_RIGHT = 'right';
+  const EVENT_SLIDE$1 = `slide${EVENT_KEY$b}`;
+  const EVENT_SLID$1 = `slid${EVENT_KEY$b}`;
+  const EVENT_KEYDOWN_ARROW$1 = `keydown${EVENT_KEY$b}`;
+  const EVENT_MOUSEENTER$1 = `mouseenter${EVENT_KEY$b}`;
+  const EVENT_MOUSELEAVE$1 = `mouseleave${EVENT_KEY$b}`;
+  const EVENT_TOUCHSTART$1 = `touchstart${EVENT_KEY$b}`;
+  const EVENT_TOUCHMOVE$1 = `touchmove${EVENT_KEY$b}`;
+  const EVENT_TOUCHEND$1 = `touchend${EVENT_KEY$b}`;
+  const EVENT_POINTERDOWN$1 = `pointerdown${EVENT_KEY$b}`;
+  const EVENT_POINTERUP$1 = `pointerup${EVENT_KEY$b}`;
+  const EVENT_DRAG_START$1 = `dragstart${EVENT_KEY$b}`;
+  const EVENT_LOAD_DATA_API$1 = `load${EVENT_KEY$b}${DATA_API_KEY$7}`;
+  const EVENT_CLICK_DATA_API$7 = `click${EVENT_KEY$b}${DATA_API_KEY$7}`;
+
+  /**
+   * ------------------------------------------------------------------------
+   * Class Definition
+   * ------------------------------------------------------------------------
+   */
+  class Carousel extends BaseComponent {
+    constructor(element, config) {
+      super(element);
+      this._items = null;
+      this._interval = null;
+      this._activeElement = null;
+      this._isPaused = false;
+      this._isSliding = false;
+      this.touchTimeout = null;
+      this.touchStartX = 0;
+      this.touchDeltaX = 0;
+
+      this._config = this._getConfig(config);
+
+      this._indicatorsElement = SelectorEngine.findOne('.carousel-indicators', this._element);
+      this._touchSupported = 'ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0;
+
+      this._pointerEvent = Boolean(window.PointerEvent);
+
+      this._addEventListeners();
+    }
+
+    // TODO: Add Carousel methods here
+  }
+
+  /**
+   * ------------------------------------------------------------------------
+   * Data Api implementation
+   * ------------------------------------------------------------------------
+   */
+
+  EventHandler.on(window, EVENT_LOAD_DATA_API$1, () => {
+    const carousels = SelectorEngine.find(SELECTOR_CAROUSEL);
+    for (const carousel of carousels) {
+      Carousel.getInstance(carousel) || new Carousel(carousel);
+    }
+  });
+
+  EventHandler.on(window, EVENT_CLICK_DATA_API$7, (event) => {
+    const target = event.target;
+    if (target && target.getAttribute('data-bs-slide-to')) {
+      event.preventDefault();
+      const selector = target.getAttribute('data-bs-target') || getSelectorFromElement(target);
+      const slideIndex = SelectorEngine.findOne(target.getAttribute('data-bs-target') || getSelectorFromElement(target));
+
+      const carousel = Carousel.getInstance(selector);
+
+      if (carousel) {
+        carousel.to(slideIndex);
+      }
+    }
+  });
+
+  // TODO: Add more data-api implementations as needed
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+  defineJQueryPlugin(Carousel);
+
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  const SELECTOR_CAROUSEL = '.carousel';
+  const DATA_KEY$8 = 'bs.carousel';
+  const EVENT_KEY$a = `.${DATA_KEY$8}`;
+  const DATA_API_KEY$5 = '.data-api';
+  const ARROW_LEFT_KEY$1 = 'ArrowLeft';
+  const ARROW_RIGHT_KEY$1 = 'ArrowRight';
+
+  // TODO: Add more constants as needed
+
+  /**
+   * ------------------------------------------------------------------------
+   * Class Definition
+   * ------------------------------------------------------------------------
+   */
+
+  class Carousel extends BaseComponent {
+    constructor(element, config) {
+      // ...
+    }
+
+    // TODO: Implement Carousel methods here
+  }
+
+  /**
+   * ------------------------------------------------------------------------
+   * Data Api implementation
+   * ------------------------------------------------------------------------
+   */
+
+  // TODO: Implement data-api functions here
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+
+  // TODO: Implement jQuery functions here
+
+  // Return the public utility functions and constants
+  return {
+    SelectorEngine,
+    Carousel,
+    // TODO: Add other utility functions and classes here
+  };
+}));
+
+   
+   
     // TODO: this is now unused; remove later along with prev()
     next(element, selector) {
       let next = element.nextElementSibling;
@@ -1544,6 +1843,140 @@
         return;
       }
 
+            this._isSliding = true;
+
+      // Pause the carousel if it's not already paused
+      if (this._config.pause === 'hover' && !this._isPaused) {
+        this.pause();
+      }
+
+      // Update the interval based on the next element
+      this._updateInterval();
+
+      // Set the active indicator for the new slide
+      if (this._indicatorsElement) {
+        this._setActiveIndicatorElement(nextElementIndex);
+      }
+
+      const slidEvent = triggerEvent(EVENT_SLID);
+
+      if (slidEvent.defaultPrevented) {
+        return;
+      }
+
+      // Check if we should slide or just reset state
+      if (this._config.slide) {
+        // Start the slide transition
+        this._isSliding = false;
+
+        // Bootstrap's transition end event name
+        const transitionEndEvent = Util.getTransitionDurationFromElement(activeElement);
+
+        // Listen for the transition end event to know when the slide transition is complete
+        EventHandler.one(activeElement, transitionEndEvent, () => {
+          this._isSliding = false;
+          activeElement.classList.remove(CLASS_NAME_ACTIVE$2);
+
+          // Call the _cycle method to continue cycling if not paused
+          if (!this._isPaused) {
+            this._cycle();
+          }
+        });
+
+        // Trigger the next element to slide
+        Util.emulateTransitionEnd(activeElement, transitionEndEvent);
+
+        // Add the active class to the next element
+        nextElement.classList.add(CLASS_NAME_ACTIVE$2);
+      } else {
+        // If slide is disabled, just remove the active class from the current element
+        activeElement.classList.remove(CLASS_NAME_ACTIVE$2);
+        this._isSliding = false;
+
+        // Call the _cycle method to continue cycling if not paused
+        if (!this._isPaused) {
+          this._cycle();
+        }
+      }
+    }
+
+    _cycle() {
+      if (!this._interval) {
+        return;
+      }
+
+      // Clear the existing interval
+      clearInterval(this._interval);
+
+      // Set a new interval based on the config
+      this._interval = setInterval(
+        document.visibilityState ? this._intervalHandler.bind(this) : this._next.bind(this),
+        this._config.interval
+      );
+    }
+
+    _intervalHandler() {
+      if (document.visibilityState && document.visibilityState !== 'visible') {
+        // If the document is not visible, pause the carousel
+        this.pause();
+      } else {
+        // If the document is visible, move to the next slide
+        this._next();
+      }
+    }
+
+    _next() {
+      if (this._isSliding) {
+        return;
+      }
+
+      this._slide(ORDER_NEXT);
+    }
+
+    _prev() {
+      if (this._isSliding) {
+        return;
+      }
+
+      this._slide(ORDER_PREV);
+    }
+
+    // Other methods like _directionToOrder, _orderToDirection, _dispose, etc. go here
+  }
+
+  // ------------------------------------------------------------------------
+  // jQuery
+  // ------------------------------------------------------------------------
+
+  // TODO: Implement jQuery methods if needed
+
+  // ------------------------------------------------------------------------
+  // Data API implementation
+  // ------------------------------------------------------------------------
+
+  EventHandler.on(document, EVENT_CLICK_DATA_API$7, SELECTOR_CAROUSEL, (event) => {
+    event.preventDefault();
+
+    const target = event.target.closest(SELECTOR_CAROUSEL);
+
+    const data = Carousel.getInstance(target) || new Carousel(target);
+
+    if (event.target.getAttribute('data-bs-slide-to')) {
+      data.to(event.target.getAttribute('data-bs-slide-to'));
+    } else if (event.target.getAttribute('data-bs-slide')) {
+      const direction = event.target.getAttribute('data-bs-slide');
+      data[direction]();
+    }
+  });
+
+  // ------------------------------------------------------------------------
+  // Exports
+  // ------------------------------------------------------------------------
+
+  // TODO: Export classes and utility functions if needed
+})();
+
+     
       const isCycling = Boolean(this._interval);
       this.pause();
       this._isSliding = true;
