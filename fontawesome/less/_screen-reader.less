@@ -12,3 +12,84 @@
 .@{fa-css-prefix}-sr-only-focusable {
   .fa-sr-only-focusable();
 }
+
+// Screen-reader utilities
+// -------------------------
+
+// Only display content to screen readers
+.sr-only,
+.@{fa-css-prefix}-sr-only {
+  .fa-sr-only();
+}
+
+// Use in conjunction with .sr-only to only display content when it's focused
+.sr-only-focusable,
+.@{fa-css-prefix}-sr-only-focusable {
+  .fa-sr-only-focusable();
+}
+
+// Animation mixins
+// --------------------------
+
+// Animating icons
+// --------------------------
+
+.@{fa-css-prefix}-beat {
+  animation-name: ~'@{fa-css-prefix}-beat';
+  animation-delay: ~'var(--@{fa-css-prefix}-animation-delay, 0s)';
+  animation-direction: ~'var(--@{fa-css-prefix}-animation-direction, normal)';
+  animation-duration: ~'var(--@{fa-css-prefix}-animation-duration, 1s)';
+  animation-iteration-count: ~'var(--@{fa-css-prefix}-animation-iteration-count, infinite)';
+  animation-timing-function: ~'var(--@{fa-css-prefix}-animation-timing, ease-in-out)';
+}
+
+.@{fa-css-prefix}-bounce {
+  animation-name: ~'@{fa-css-prefix}-beat';
+  animation-delay: ~'var(--@{fa-css-prefix}-animation-delay, 0s)';
+  animation-direction: ~'var(--@{fa-css-prefix}-animation-direction, normal)';
+  animation-duration: ~'var(--@{fa-css-prefix}-animation-duration, 1s)';
+  animation-iteration-count: ~'var(--@{fa-css-prefix}-animation-iteration-count, infinite)';
+  animation-timing-function: ~'var(--@{fa-css-prefix}-animation-timing, cubic-bezier(0.280, 0.840, 0.420, 1))';
+}
+
+.@{fa-css-prefix}-fade {
+  animation-name: ~'@{fa-css-prefix}-fade';
+  animation-delay: ~'var(--@{fa-css-prefix}-animation-delay, 0s)';
+  animation-direction: ~'var(--@{fa-css-prefix}-animation-direction, normal)';
+  animation-duration: ~'var(--@{fa-css-prefix}-animation-duration, 1s)';
+  animation-iteration-count: ~'var(--@{fa-css-prefix}-animation-iteration-count, infinite)';
+  animation-timing-function: ~'var(--@{fa-css-prefix}-animation-timing, cubic-bezier(.4,0,.6,1))';
+}
+
+// ... continue with other animation mixins
+
+// Bordered + pulled icons
+// -------------------------
+
+.@{fa-css-prefix}-border {
+  border-color: ~'var(--@{fa-css-prefix}-border-color, @{fa-border-color})';
+  border-radius: ~'var(--@{fa-css-prefix}-border-radius, @{fa-border-radius})';
+  border-style: ~'var(--@{fa-css-prefix}-border-style, @{fa-border-style})';
+  border-width: ~'var(--@{fa-css-prefix}-border-width, @{fa-border-width})';
+  padding: ~'var(--@{fa-css-prefix}-border-padding, @{fa-border-padding})';
+}
+
+.@{fa-css-prefix}-pull-left { 
+  float: left;
+  margin-right: ~'var(--@{fa-css-prefix}-pull-margin, @{fa-pull-margin})'; 
+}
+
+.@{fa-css-prefix}-pull-right { 
+  float: right;
+  margin-left: ~'var(--@{fa-css-prefix}-pull-margin, @{fa-pull-margin})'; 
+}
+
+// Base icon class definition
+// -------------------------
+
+.@{fa-css-prefix} {
+  font-family: ~"var(--@{fa-css-prefix}-style-family, '@{fa-style-family}')";
+  font-weight: ~'var(--@{fa-css-prefix}-style, @{fa-style})';
+}
+
+// ... continue with other styles and mixins
