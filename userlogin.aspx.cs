@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-
 using System.Drawing;
-=======
-using System.Data;
-
 using System.Linq;
 using System.Web;
+using System.Web.Optimization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -16,13 +13,11 @@ namespace OnlineBookstore
 {
     public partial class userlogin : System.Web.UI.Page
     {
-
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
-
 
         protected void TextBox1_TextChanged(object sender, EventArgs e)
         {
@@ -34,16 +29,12 @@ namespace OnlineBookstore
 
         }
 
-
-        // user login
-
         protected void Button1_Click(object sender, EventArgs e)
         {
             try
             {
                 SqlConnection con = new SqlConnection(strcon);
-
-                if(con.State == System.Data.ConnectionState.Closed )
+                if (con.State == System.Data.ConnectionState.Closed)
                 {
                     con.Open();
                 }
@@ -51,16 +42,17 @@ namespace OnlineBookstore
                 SqlDataReader dr = query.ExecuteReader();
                 if (dr.HasRows)
                 {
-                    while(dr.Read())
+                    while (dr.Read())
                     {
-                        Response.Write("<script>alert('welcome back, ' + '"+dr.GetValue(0).ToString() + "');</script>");
-                        Session["username"] = dr.GetValue(8).ToString();
+                        //Response.Write("<script>alert('welcome back, ' + '" + dr.GetValue(0).ToString() + "');</script>");
+                        Session["username"] = dr.GetValue(4).ToString();
                         Session["fullname"] = dr.GetValue(0).ToString();
                         Session["role"] = "user";
-                        Session["status"] = dr.GetValue(10).ToString();
+                        Session["status"] = dr.GetValue(6).ToString();
                     }
                     Response.Redirect("homepage.aspx");
-                } 
+                    Response.Write(" < script > alert('homepage.aspx');</ script > ");
+                }
                 else
                 {
                     Response.Write("<script>alert('Invalid Account');</script>");
@@ -68,37 +60,11 @@ namespace OnlineBookstore
 
             }
 
-            catch (Exception ex) 
-            { 
-
-            }
-            //Response.Write("<script>alert('Button Click');</script>");
-
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-
-                }
-                SqlCommand cmd = new SqlCommand("select * from member_master_table where member_id='" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "'", con);
-                SqlDataReader dr = cmd.ExecuteReader();
-                if (dr.HasRows)
-                {
-                    while (dr.Read())
-                    {
-                        Response.Write("<script>alert('" + dr.GetValue(8).ToString() + "');</script>");
-                    }
-                }
-                else
-                {
-                    Response.Write("<script>alert('Invalid credentials');</script>");
-                }
-
-            }
             catch (Exception ex)
             {
 
             }
-
+            //Response.Write("<script>alert('Button Click');</script>");
         }
     }
 }
