@@ -5521,4 +5521,109 @@
   return index_umd;
 
 }));
+
+  /**
+   * Constants
+   */
+
+  // ... (existing constants)
+
+  const EVENT_CLICK_DISMISS = `click.dismiss${EVENT_KEY}`;
+  const SELECTOR_DATA_DISMISS = '[data-bs-dismiss="toast"]';
+  
+  // ... (existing constants)
+
+  /**
+   * Class definition
+   */
+
+  class Toast extends BaseComponent {
+    // ... (existing code)
+
+    // Public
+    hide() {
+      if (!this.isShown()) {
+        return;
+      }
+
+      const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE);
+
+      if (hideEvent.defaultPrevented) {
+        return;
+      }
+
+      const complete = () => {
+        this._element.classList.add(CLASS_NAME_HIDE); // @deprecated
+
+        this._element.classList.remove(CLASS_NAME_SHOWING, CLASS_NAME_SHOW);
+
+        EventHandler.trigger(this._element, EVENT_HIDDEN);
+      };
+
+      this._element.classList.add(CLASS_NAME_SHOWING);
+
+      this._queueCallback(complete, this._element, this._config.animation);
+    }
+
+    dispose() {
+      this._clearTimeout();
+
+      if (this.isShown()) {
+        this._element.classList.remove(CLASS_NAME_SHOW);
+      }
+
+      super.dispose();
+    }
+
+    // ... (existing code)
+
+    _setListeners() {
+      EventHandler.on(this._element, EVENT_MOUSEOVER, (event) => this._onInteraction(event, true));
+      EventHandler.on(this._element, EVENT_MOUSEOUT, (event) => this._onInteraction(event, false));
+      EventHandler.on(this._element, EVENT_FOCUSIN, (event) => this._onInteraction(event, true));
+      EventHandler.on(this._element, EVENT_FOCUSOUT, (event) => this._onInteraction(event, false));
+      EventHandler.on(this._element, EVENT_CLICK_DISMISS, () => this.hide());
+    }
+
+    // ... (existing code)
+  }
+
+  /**
+   * Data API implementation
+   */
+
+  // ... (existing code)
+
+  const enableDismissTrigger = (constructor) => {
+    EventHandler.on(document, EVENT_CLICK_DISMISS, SELECTOR_DATA_DISMISS, (event) => {
+      event.preventDefault();
+
+      const target = getElementFromSelector(event.target);
+      const toast = Toast.getInstance(target);
+
+      if (!toast) {
+        throw new Error(`No Toast instance found for clicked element`);
+      }
+
+      toast.hide();
+    });
+  };
+
+  enableDismissTrigger(Toast);
+
+  // ... (existing code)
+
+  /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.2.3): index.umd.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+  
+  // ... (existing code)
+
+  return index_umd;
+
+}));
+
 //# sourceMappingURL=bootstrap.js.map
