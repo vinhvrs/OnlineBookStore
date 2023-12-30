@@ -17,3 +17,70 @@ each(.fa-sizes(), {
     .fa-size(@value);
   }
 });
+
+// Sizing icons
+// -------------------------
+
+// Literal magnification scale
+.sizes-literal(@factor) when (@factor > 0) {
+  .sizes-literal((@factor - 1));
+
+  .@{fa-css-prefix}-@{factor}x {
+    font-size: (@factor * 1em);
+  }
+}
+.sizes-literal(10);
+
+// Step-based scale (with alignment)
+each(.fa-sizes(), {
+  .@{fa-css-prefix}-@{key} {
+    .fa-size(@value);
+  }
+});
+
+// Additional sizing mixins...
+// Continue with other sizing mixins or styles as needed
+
+// Mixins for Styles
+// -------------------------
+
+// Base rendering for an icon
+.fa-icon() {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  line-height: 1;
+}
+
+// Set relative font-sizing and alignment (in _sizing)
+.fa-size(@font-size) {
+  font-size: (@font-size / @fa-size-scale-base) * 1em;
+  line-height: (1 / @font-size) * 1em;
+  vertical-align: ((6 / @font-size) - (3 / 8)) * 1em;
+}
+
+// Only display content to screen readers
+.fa-sr-only() {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Use in conjunction with .sr-only to only display content when it's focused
+.fa-sr-only-focusable() {
+  &:not(:focus) {
+    .fa-sr-only();
+  }
+}
+
+// ... Continue with other mixins and styles as needed
+
