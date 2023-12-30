@@ -29,6 +29,215 @@
 
   const Popper__namespace = /*#__PURE__*/_interopNamespace(Popper);
 
+    /**
+   * --------------------------------------------------------------------------
+   * Bootstrap (v5.2.3): dropdown.js
+   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+   * --------------------------------------------------------------------------
+   */
+
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  const NAME$d = 'dropdown';
+  const DATA_KEY$8 = 'bs.dropdown';
+  const EVENT_KEY$9 = `.${DATA_KEY$8}`;
+  const DATA_API_KEY$5 = '.data-api';
+  const ESCAPE_KEY = 'Escape';
+  const SPACE_KEY = 'Space';
+  const TAB_KEY = 'Tab';
+  const ARROW_UP_KEY = 'ArrowUp';
+  const ARROW_DOWN_KEY = 'ArrowDown';
+  const RIGHT_MOUSE_BUTTON = 2; // MouseEvent.button value for the secondary button (usually the right button)
+
+  const REGEXP_KEYDOWN = new RegExp(`${ARROW_UP_KEY}|${ARROW_DOWN_KEY}|${ESCAPE_KEY}`);
+  const EVENT_HIDE$5 = `hide${EVENT_KEY$9}`;
+  const EVENT_HIDDEN$5 = `hidden${EVENT_KEY$9}`;
+  const EVENT_SHOW$5 = `show${EVENT_KEY$9}`;
+  const EVENT_SHOWN$5 = `shown${EVENT_KEY$9}`;
+  const EVENT_CLICK = `click${EVENT_KEY$9}`;
+  const EVENT_CLICK_DATA_API$5 = `click${EVENT_KEY$9}${DATA_API_KEY$5}`;
+  const EVENT_KEYDOWN_DATA_API = `keydown${EVENT_KEY$9}${DATA_API_KEY$5}`;
+  const EVENT_KEYUP_DATA_API = `keyup${EVENT_KEY$9}${DATA_API_KEY$5}`;
+  const CLASS_NAME_DISABLED = 'disabled';
+  const CLASS_NAME_SHOW$5 = 'show';
+  const CLASS_NAME_DROPUP = 'dropup';
+  const CLASS_NAME_DROPEND = 'dropend';
+  const CLASS_NAME_DROPSTART = 'dropstart';
+  const CLASS_NAME_NAVBAR = 'navbar';
+  const CLASS_NAME_POSITION_STATIC = 'position-static';
+  const SELECTOR_DATA_TOGGLE$5 = '[data-bs-toggle="dropdown"]';
+  const SELECTOR_FORM_CHILD = '.dropdown form';
+  const SELECTOR_MENU = '.dropdown-menu';
+  const SELECTOR_NAVBAR_NAV = '.navbar-nav';
+  const SELECTOR_VISIBLE_ITEMS = '.dropdown-menu .dropdown-item:not(.disabled):not(:disabled)';
+  const PLACEMENT_TOP = 'top';
+  const PLACEMENT_TOP_START = 'top-start';
+  const PLACEMENT_TOP_END = 'top-end';
+  const PLACEMENT_BOTTOM = 'bottom';
+  const PLACEMENT_BOTTOM_START = 'bottom-start';
+  const PLACEMENT_BOTTOM_END = 'bottom-end';
+  const PLACEMENT_RIGHT = 'right';
+  const PLACEMENT_LEFT = 'left';
+  const PLACEMENT_RIGHT_START = 'right-start';
+  const PLACEMENT_RIGHT_END = 'right-end';
+  const PLACEMENT_LEFT_START = 'left-start';
+  const PLACEMENT_LEFT_END = 'left-end';
+  const Default$7 = {
+    offset: [0, 2],
+    boundary: 'clippingParents',
+    reference: 'toggle',
+    display: 'dynamic',
+    popperConfig: null
+  };
+  const DefaultType$7 = {
+    offset: '(array|string|function)',
+    boundary: '(string|element)',
+    reference: '(string|element|object)',
+    display: 'string',
+    popperConfig: '(null|object|function)'
+  };
+
+  /**
+   * ------------------------------------------------------------------------
+   * Class Definition
+   * ------------------------------------------------------------------------
+   */
+
+  class Dropdown extends BaseComponent {
+    constructor(element, config) {
+      super(element);
+
+      this._popper = null;
+      this._config = this._getConfig(config);
+      this._menu = this._getMenuElement();
+      this._inNavbar = this._detectNavbar();
+
+      this._addEventListeners();
+    }
+
+    // TODO: Add Dropdown methods here
+  }
+
+  /**
+   * ------------------------------------------------------------------------
+   * Data Api implementation
+   * ------------------------------------------------------------------------
+   */
+
+  EventHandler.on(document, EVENT_CLICK_DATA_API$5, (event) => {
+    const target = SelectorEngine.closest(event.target, SELECTOR_DATA_TOGGLE$5);
+    const dropdown = Dropdown.getInstance(target);
+
+    if (!dropdown || dropdown._menu.contains(event.target) || (dropdown._config.autoClose && !dropdown._menu.contains(event.target))) {
+      return;
+    }
+
+    dropdown.toggle();
+  });
+
+  EventHandler.on(document, EVENT_KEYDOWN_DATA_API, (event) => {
+    if (!REGEXP_KEYDOWN.test(event.key)) {
+      return;
+    }
+
+    const activeElement = document.activeElement;
+
+    if (!activeElement || activeElement.tagName === 'BODY') {
+      return;
+    }
+
+    const dropdown = Dropdown.getInstance(activeElement);
+
+    if (!dropdown || dropdown._menu.contains(activeElement)) {
+      return;
+    }
+
+    if (event.key === ESCAPE_KEY) {
+      dropdown.hide();
+      return;
+    }
+
+    if (event.key === ARROW_UP_KEY || event.key === ARROW_DOWN_KEY) {
+      event.preventDefault();
+      dropdown.toggle();
+      return;
+    }
+
+    if (event.key === TAB_KEY && (event.shiftKey || !dropdown._menu.contains(document.activeElement))) {
+      dropdown.hide();
+    }
+  });
+
+  EventHandler.on(document, EVENT_KEYUP_DATA_API, (event) => {
+    if (event.key === SPACE_KEY || event.key === RIGHT_MOUSE_BUTTON) {
+      const toggler = SelectorEngine.closest(event.target, SELECTOR_DATA_TOGGLE$5);
+      if (!toggler) return;
+      const dropdown = Dropdown.getInstance(toggler);
+
+      if (event.key === RIGHT_MOUSE_BUTTON && dropdown._menu.contains(event.target) && !dropdown._config.autoClose) {
+        return;
+      }
+
+      event.preventDefault();
+      if (dropdown._inNavbar) {
+        reflow(dropdown._menu);
+      }
+      dropdown.toggle();
+    }
+  });
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+
+  defineJQueryPlugin(Dropdown);
+
+  /**
+   * ------------------------------------------------------------------------
+   * Constants
+   * ------------------------------------------------------------------------
+   */
+
+  // TODO: Add more constants if needed
+
+  /**
+   * ------------------------------------------------------------------------
+   * Class Definition
+   * ------------------------------------------------------------------------
+   */
+
+  // TODO: Add more class definition if needed
+
+  /**
+   * ------------------------------------------------------------------------
+   * Data Api implementation
+   * ------------------------------------------------------------------------
+   */
+
+  // TODO: Implement more data-api functions if needed
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+
+  // TODO: Implement more jQuery functions if needed
+
+  // Return the public utility functions and constants
+  return {
+    Dropdown,
+    // TODO: Add other utility functions and classes here
+  };
+}));
+
+   
   /**
    * --------------------------------------------------------------------------
    * Bootstrap (v5.2.3): util/index.js
@@ -664,6 +873,72 @@
     }
 
   };
+
+    /**
+   * ------------------------------------------------------------------------
+   * Data API implementation
+   * ------------------------------------------------------------------------
+   */
+
+  /**
+   * ------------------------------------------------------------------------
+   * jQuery
+   * ------------------------------------------------------------------------
+   */
+
+  const getInstance = (element, constructor) => {
+    const instance = Data.get(element, DATA_KEY$8);
+
+    if (instance || constructor) {
+      return instance;
+    }
+
+    return new Dropdown(element);
+  };
+
+  const initializeDataAPI = () => {
+    const toggles = SelectorEngine.find(SELECTOR_DATA_TOGGLE$5);
+
+    for (const toggle of toggles) {
+      const dropdown = getInstance(toggle);
+      const config = dropdown._config;
+
+      if (toggle.getAttribute('data-bs-boundaries')) {
+        config.boundary = toggle.getAttribute('data-bs-boundaries');
+      }
+
+      if (toggle.getAttribute('data-bs-reference')) {
+        config.reference = toggle.getAttribute('data-bs-reference');
+      }
+
+      if (toggle.dataset.bsDisplay === 'static') {
+        config.display = 'static';
+      }
+
+      if (toggle.getAttribute('data-bs-offset')) {
+        config.offset = JSON.parse(toggle.getAttribute('data-bs-offset'));
+      }
+
+      dropdown.show();
+    }
+  };
+
+  onDOMContentLoaded(() => {
+    initializeDataAPI();
+  });
+
+  /**
+   * ------------------------------------------------------------------------
+   * Exports
+   * ------------------------------------------------------------------------
+   */
+
+  return {
+    Dropdown,
+    // TODO: Add other classes and utility functions if needed
+  };
+}));
+
 
   /**
    * --------------------------------------------------------------------------
