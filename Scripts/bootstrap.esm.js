@@ -302,6 +302,44 @@ const executeAfterTransition = (callback, transitionElement, waitForTransition =
  */
 
 
+const getItemIndex = (list, activeElement) => {
+  return list.indexOf(activeElement);
+};
+
+const getNextActiveElement = (list, activeElement, isNext, isCycleAllowed) => {
+  const totalItems = list.length;
+  const currentIndex = getItemIndex(list, activeElement);
+
+  if (isNext) {
+    return isCycleAllowed && currentIndex === totalItems - 1 ? list[0] : list[currentIndex + 1] || null;
+  } else {
+    return isCycleAllowed && currentIndex === 0 ? list[totalItems - 1] : list[currentIndex - 1] || null;
+  }
+};
+
+// Export the utility functions
+export {
+  getElementFromSelector,
+  getTransitionDurationFromElement,
+  triggerTransitionEnd,
+  isElement,
+  getElement,
+  isVisible,
+  isDisabled,
+  findShadowRoot,
+  noop,
+  reflow,
+  getjQuery,
+  onDOMContentLoaded,
+  isRTL,
+  defineJQueryPlugin,
+  execute,
+  executeAfterTransition,
+  getItemIndex,
+  getNextActiveElement,
+};
+
+
 const getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed) => {
   const listLength = list.length;
   let index = list.indexOf(activeElement); // if the element does not exist in the list return an element
