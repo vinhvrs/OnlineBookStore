@@ -14,3 +14,26 @@
 #footer2 {
     background: #d3f18b;
 }
+
+
+/* Footer links styling */
+footer a {
+    color: #ff6a00;
+    text-decoration: none !important;
+}
+
+footer a:hover {
+    color: #00ffff;
+}
+
+/* Styling for the first section of the footer */
+#footer1 {
+    background: #4cff00;
+    /* Add additional styling properties as needed */
+}
+
+/* Styling for the second section of the footer */
+#footer2 {
+    background: #d3f18b;
+    /* Add additional styling properties as needed */
+}
