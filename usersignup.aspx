@@ -11,7 +11,7 @@
                   <div class="row">
                      <div class="col">
                         <center>
-                           <img width="100px" src="imgs/generaluser.png"/>
+                           <img width="100px" src="imgs/generaluser1.png"/>
                         </center>
                      </div>
                   </div>
@@ -160,7 +160,7 @@
                      <div class="col-md-6">
                         <label>Member ID</label>
                         <div class="form-group">
-                           <asp:TextBox class="form-control" ID="TextBox8" runat="server" placeholder="User ID" ></asp:TextBox>
+                           <asp:TextBox class="form-control" ID="TextBox8" runat="server" placeholder="User ID"></asp:TextBox>
                         </div>
                      </div>
                      <div class="col-md-6">

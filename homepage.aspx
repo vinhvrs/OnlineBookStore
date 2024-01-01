@@ -6,7 +6,7 @@
  <selection>
     <div>
         <center>
-    <img src="imgs/home-bg1.png"" class="img-fluid" />
+    <img src="imgs/home-bg1.png" class="img-fluid" />
 </selection>
 <selection>
     <div class="container">

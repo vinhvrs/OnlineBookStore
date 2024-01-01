@@ -1,39 +1,16 @@
-﻿footer a {
-    color: #ff6a00;
+﻿.footerlinks {
+    color: #ffffff;
     text-decoration: none !important;
 }
 
-    footer a:hover {
-        color: #00ffff;
+    .footerlinks:hover {
+        color: #ffd800;
     }
 
 #footer1 {
-    background: #4cff00;
+    background: #b6ff00;
 }
 
 #footer2 {
-    background: #d3f18b;
-}
-
-
-/* Footer links styling */
-footer a {
-    color: #ff6a00;
-    text-decoration: none !important;
-}
-
-footer a:hover {
-    color: #00ffff;
-}
-
-/* Styling for the first section of the footer */
-#footer1 {
-    background: #4cff00;
-    /* Add additional styling properties as needed */
-}
-
-/* Styling for the second section of the footer */
-#footer2 {
-    background: #d3f18b;
-    /* Add additional styling properties as needed */
+    background: #b6ff00;
 }
