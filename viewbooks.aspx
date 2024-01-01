@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="viewbooks.aspx.cs" Inherits="OnlineBookstore.viewbooks" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="viewbooks.aspx.cs" Inherits="OnlineBookstore.viewbooks" %>
     <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
         <script type="text/javascript">
