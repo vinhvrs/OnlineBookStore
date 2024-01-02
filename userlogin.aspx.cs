@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -51,7 +51,7 @@ namespace OnlineBookstore
                         Session["status"] = dr.GetValue(6).ToString();
                     }
                     Response.Redirect("homepage.aspx");
-                    //Response.Write(" < script > alert('homepage.aspx');</ script > ");
+                    Response.Write(" < script > alert('homepage.aspx');</ script > ");
                 }
                 else
                 {
