@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -40,7 +40,7 @@ namespace OnlineBookstore
                 {
                     con.Open();
                 }
-                SqlCommand cmd = new SqlCommand("SELECT * from member_master_table where member_id='" + TextBox8.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * from member_master_tbl where member_id='" + TextBox8.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -69,21 +69,46 @@ namespace OnlineBookstore
                 {
                     con.Open();
                 }
-                SqlCommand cmd = new SqlCommand("INSERT INTO member_master_tbl(full_name,dob,contact_no,email,state,city,pincode,full_address,member_id,password,account_status) values(@full_name,@dob,@contact_no,@email,@state,@city,@pincode,@full_address,@member_id,@password,@account_status)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO member_master_tbl(full_name,dob,contact_no,email,pincode,member_id,password,account_status) values(@full_name,@dob,@contact_no,@email,@pincode,@member_id,@password,@account_status)", con);
                 cmd.Parameters.AddWithValue("@full_name", TextBox1.Text.Trim());
                 cmd.Parameters.AddWithValue("@dob", TextBox2.Text.Trim());
                 cmd.Parameters.AddWithValue("@contact_no", TextBox3.Text.Trim());
                 cmd.Parameters.AddWithValue("@email", TextBox4.Text.Trim());
-                cmd.Parameters.AddWithValue("@state", DropDownList1.SelectedItem.Value);
-                cmd.Parameters.AddWithValue("@city", TextBox6.Text.Trim());
                 cmd.Parameters.AddWithValue("@pincode", TextBox7.Text.Trim());
-                cmd.Parameters.AddWithValue("@full_address", TextBox5.Text.Trim());
                 cmd.Parameters.AddWithValue("@member_id", TextBox8.Text.Trim());
                 cmd.Parameters.AddWithValue("@password", TextBox9.Text.Trim());
                 cmd.Parameters.AddWithValue("@account_status", "pending");
                 cmd.ExecuteNonQuery();
+
+                SqlCommand query_count = new SqlCommand("SELECT COUNT(*) FROM member_address", con);
+                int count = (int) query_count.ExecuteScalar() + 1;
+                String count_address = "de";
+                if (count < 10)
+                {
+                    count_address += "00";
+                    count_address += count.ToString();
+                }
+                else if (count < 100)
+                {
+                    count_address += "0";
+                    count_address += count.ToString();
+                }
+                else
+                {
+                    count_address += count.ToString();
+                }
+
+                SqlCommand cmd2 = new SqlCommand("INSERT INTO member_address(member_id,address_id,state,city,full_address) values(@member_id,@address_id,@state,@city,@full_address)", con);
+                cmd2.Parameters.AddWithValue("@member_id", TextBox8.Text.Trim());
+                cmd2.Parameters.AddWithValue("@address_id", count_address);
+                cmd2.Parameters.AddWithValue("@state", DropDownList1.SelectedItem.Value);
+                cmd2.Parameters.AddWithValue("@city", TextBox6.Text.Trim());
+                cmd2.Parameters.AddWithValue("@full_address", TextBox5.Text.Trim());
+                cmd2.ExecuteNonQuery();
+                Console.Write("FUCK THIS LINE");
                 con.Close();
                 Response.Write("<script>alert('Sign Up Successful. Go to User Login to Login');</script>");
+                Response.Redirect("userlogin.aspx");
             }
             catch (Exception ex)
             {
