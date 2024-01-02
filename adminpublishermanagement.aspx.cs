@@ -18,7 +18,7 @@ namespace OnlineBookstore
             GridView1.DataBind();
         }
         // add button click
-        protected void Button2_Click(object sender, EventArgs e)
+        protected void Button2_Click1(object sender, EventArgs e)
         {
             if (checkIfPublisherExists())
             {
@@ -30,7 +30,7 @@ namespace OnlineBookstore
             }
         }
         // update button click
-        protected void Button3_Click(object sender, EventArgs e)
+        protected void Button3_Click1(object sender, EventArgs e)
         {
             if (checkIfPublisherExists())
             {
@@ -43,7 +43,7 @@ namespace OnlineBookstore
             }
         }
         // delete button click
-        protected void Button4_Click(object sender, EventArgs e)
+        protected void Button4_Click1(object sender, EventArgs e)
         {
             if (checkIfPublisherExists())
             {
@@ -56,12 +56,10 @@ namespace OnlineBookstore
             }
         }
         // GO button click
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void Button1_Click1(object sender, EventArgs e)
         {
             getPublisherByID();
         }
-
-
 
         // user defined function
         void getPublisherByID()
@@ -74,7 +72,8 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from Publisher_master_tbl where Publisher_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM publisher_master_tbl WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
+
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -108,7 +107,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("DELETE from Publisher_master_tbl WHERE Publisher_id='" + TextBox1.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("DELETE from publisher_master_tbl WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
 
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -133,9 +132,9 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("UPDATE Publisher_master_tbl SET Publisher_name=@Publisher_name WHERE Publisher_id='" + TextBox1.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("UPDATE publisher_master_tbl SET publisher_name=@publisher_name WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
 
-                cmd.Parameters.AddWithValue("@Publisher_name", TextBox2.Text.Trim());
+                cmd.Parameters.AddWithValue("@publisher_name", TextBox2.Text.Trim());
 
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -160,10 +159,10 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO Publisher_master_tbl(Publisher_id,Publisher_name) values(@Publisher_id,@Publisher_name)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO publisher_master_tbl(Publisher_id,Publisher_name) values(@publisher_id,@publisher_name)", con);
 
-                cmd.Parameters.AddWithValue("@Publisher_id", TextBox1.Text.Trim());
-                cmd.Parameters.AddWithValue("@Publisher_name", TextBox2.Text.Trim());
+                cmd.Parameters.AddWithValue("@publisher_id", TextBox1.Text.Trim());
+                cmd.Parameters.AddWithValue("@publisher_name", TextBox2.Text.Trim());
 
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -189,7 +188,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from Publisher_master_tbl where Publisher_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * from publisher_master_tbl where publisher_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -226,6 +225,6 @@ namespace OnlineBookstore
         protected void TextBox1_TextChanged(object sender, EventArgs e)
         {
 
-        }
+        }       
     }
 }

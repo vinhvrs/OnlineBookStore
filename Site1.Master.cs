@@ -16,6 +16,11 @@ namespace OnlineBookstore
         {
             try
             {
+                //if (Session["role"]  == null)
+                //{
+                //    Session["role"] = "";
+                //    Console.Write("NULL");
+                //}
                 if (Session["role"].Equals(""))
                 {
                     LinkButton1.Visible = true; // user login link button
@@ -32,10 +37,9 @@ namespace OnlineBookstore
                     LinkButton9.Visible = false; // book issuing link button
                     LinkButton10.Visible = false; // member management link button
 
-
-
                 }
-                else if (Session["role"].Equals("user"))
+                else
+                if (Session["role"].Equals("user"))
                 {
                     LinkButton1.Visible = false; // user login link button
                     LinkButton2.Visible = false; // sign up link button
@@ -46,6 +50,7 @@ namespace OnlineBookstore
 
 
                     LinkButton6.Visible = true; // admin login link button
+                    LinkButton10.Visible = false; // Member management
                     LinkButton11.Visible = false; // author management link button
                     LinkButton12.Visible = false; // publisher management link button
                     LinkButton8.Visible = false; // book inventory link button
@@ -72,6 +77,11 @@ namespace OnlineBookstore
             {
 
             }
+        }
+
+        protected void LinkButton7_Click(object sender, EventArgs e)
+        {
+
         }
 
         protected void LinkButton6_Click(object sender, EventArgs e)
@@ -119,7 +129,7 @@ namespace OnlineBookstore
             Response.Redirect("usersignup.aspx");
         }
 
-        //logout button
+        // Log Out button
         protected void LinkButton3_Click(object sender, EventArgs e)
         {
             Session["username"] = "";
@@ -140,14 +150,9 @@ namespace OnlineBookstore
             LinkButton8.Visible = false; // book inventory link button
             LinkButton9.Visible = false; // book issuing link button
             LinkButton10.Visible = false; // member management link button
-
-            Response.Redirect("homepage.aspx");
+            // => This will force the website refresh at that moment click on LogOut button
         }
 
-        // view profile
-        protected void LinkButton7_Click(object sender, EventArgs e)
-        {
-
-        }
+       
     }
 }

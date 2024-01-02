@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -225,7 +225,7 @@ namespace OnlineBookstore
 
         protected void TextBox1_TextChanged(object sender, EventArgs e)
         {
-
+           
         }
     }
 }
