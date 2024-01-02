@@ -1,4 +1,4 @@
-/* Wrapping element */
+﻿/* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
     margin-top: 15px;
@@ -16,7 +16,6 @@ textarea {
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .body-content {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding: 0;
     }
 }

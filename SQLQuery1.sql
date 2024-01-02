@@ -1,0 +1,1 @@
+﻿select*from author_master_tbl

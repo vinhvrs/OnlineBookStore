@@ -1,4 +1,16 @@
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeFile="adminauthormanagement.aspx.cs" Inherits="OnlineBookstore.adminauthormanagement" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
+    <script type="text/javascript">
+      $(document).ready(function () {
+      
+          //$(document).ready(function () {
+              //$('.table').DataTable();
+         // });
+      
+          $(".table").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable();
+          //$('.table1').DataTable();
+      });
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -31,7 +43,8 @@
                         <label>Author ID</label>
                         <div class="form-group">
                            <div class="input-group">
-
+                              <asp:TextBox CssClass="form-control" ID="TextBox1" runat="server" placeholder="ID"></asp:TextBox>
+                              <asp:Button class="btn btn-primary" ID="Button1" runat="server" Text="Go" OnClick="Button1_Click" />
                            </div>
                         </div>
                      </div>
@@ -74,7 +87,7 @@
                      </div>
                   </div>
                   <div class="row">
-                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:con  %>" SelectCommand="SELECT * FROM [author_master_tbl]"></asp:SqlDataSource>
+                      <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:con  %>" SelectCommand="SELECT * FROM [author_master_tbl]"></asp:SqlDataSource>
                      <div class="col">
                         <asp:GridView class="table table-striped table-bordered" ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="author_id" DataSourceID="SqlDataSource1">
                            <Columns>
@@ -89,7 +102,7 @@
          </div>
       </div>
    </div>
-
 </asp:Content>
 
 
+ 

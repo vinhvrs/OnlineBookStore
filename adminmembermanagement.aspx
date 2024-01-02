@@ -1,7 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="adminauthormanagement.aspx.cs" Inherits="OnlineBookstore.adminmembermanagement" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="adminmembermanagement.aspx.cs" Inherits="OnlineBookstore.adminmembermanagement" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
        <div class="container-fluid">
       <div class="row">
          <div class="col-md-5">
@@ -17,7 +18,7 @@
                   <div class="row">
                      <div class="col">
                         <center>
-                           <img width="100px" src="imgs/generaluser.png" />
+                           <img width="100px" src="imgs/generaluser1.png" />
                         </center>
                      </div>
                   </div>
@@ -137,4 +138,5 @@
          </div>
       </div>
    </div>
+
 </asp:Content>

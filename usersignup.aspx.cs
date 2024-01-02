@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
@@ -88,10 +88,13 @@ namespace OnlineBookstore
                 {
                     count_address += "00";
                     count_address += count.ToString();
-                } else if (count < 100) {
+                }
+                else if (count < 100)
+                {
                     count_address += "0";
                     count_address += count.ToString();
-                } else
+                }
+                else
                 {
                     count_address += count.ToString();
                 }
