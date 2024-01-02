@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Optimization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -13,6 +15,16 @@ namespace OnlineBookstore
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void TextBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -32,25 +44,27 @@ namespace OnlineBookstore
                 {
                     while (dr.Read())
                     {
-                        Response.Write("<script>alert('welcome back, ' + '" + dr.GetValue(2).ToString() + "');</script>");
-                        Session["username"] = dr.GetValue(8).ToString();
+                        //Response.Write("<script>alert('welcome back, ' + '" + dr.GetValue(0).ToString() + "');</script>");
+                        Session["username"] = dr.GetValue(4).ToString();
                         Session["fullname"] = dr.GetValue(0).ToString();
                         Session["role"] = "user";
-                        Session["status"] = dr.GetValue(10).ToString();
+                        Session["status"] = dr.GetValue(6).ToString();
                     }
                     Response.Redirect("homepage.aspx");
-
+                    //Response.Write(" < script > alert('homepage.aspx');</ script > ");
                 }
                 else
                 {
                     Response.Write("<script>alert('Invalid Account');</script>");
                 }
+
             }
 
             catch (Exception ex)
             {
 
             }
+            //Response.Write("<script>alert('Button Click');</script>");
         }
     }
 }
