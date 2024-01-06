@@ -13,7 +13,7 @@ namespace OnlineBookstore
 {
     public partial class adminbookinventory : System.Web.UI.Page
     {
-        string strcon = ConfigurationManager.ConnectionStrings["ElibDBConnectionString"].ConnectionString;
+        string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         static string global_filepath;
         static int global_actual_stock, global_current_stock, global_issued_books;
 
@@ -24,11 +24,11 @@ namespace OnlineBookstore
                 fillAuthorPublisherValues();
             }
             GridView1.DataBind();
-            
+
         }
 
         // go button click
-        protected void Button4_Click(object sender, EventArgs e)
+        protected void Button4_Click1(object sender, EventArgs e)
         {
             getBookByID();
         }
@@ -45,7 +45,7 @@ namespace OnlineBookstore
             deleteBookByID();
         }
         // add button click
-        protected void Button1_Click(object sender, EventArgs e)
+        protected void Button1_Click1(object sender, EventArgs e)
         {
             if (checkIfBookExists())
             {
@@ -73,9 +73,20 @@ namespace OnlineBookstore
                         con.Open();
                     }
 
-                    SqlCommand cmd = new SqlCommand("DELETE from book_master_tbl WHERE book_id='" + TextBox1.Text.Trim() + "'", con);
+                    SqlCommand cmd = new SqlCommand("DELETE FROM book_master_tbl WHERE book_id=@book_id;", con);
+                    cmd.Parameters.AddWithValue("@book_id", TextBox1.Text.Trim());
+                    //SqlCommand cmd2 = new SqlCommand("DELETE from author_master_tbl WHERE book_id=@book_id;", con);
+                    //cmd2.Parameters.AddWithValue("@book_id", TextBox1.Text.Trim());
+                    SqlCommand cmd3 = new SqlCommand("DELETE FROM book_stock WHERE book_id=@book_id;", con);
+                    cmd3.Parameters.AddWithValue("@book_id", TextBox1.Text.Trim());
+                    SqlCommand cmd4 = new SqlCommand("DELETE FROM book_author WHERE book_id=@book_id;", con);
+                    cmd4.Parameters.AddWithValue("@book_id", TextBox1.Text.Trim());
 
-                    cmd.ExecuteNonQuery();
+                    //cmd2.ExecuteNonQuery(); // author_master_tbl
+                    cmd4.ExecuteNonQuery(); // book_author
+                    cmd3.ExecuteNonQuery(); // book_stock
+                    cmd.ExecuteNonQuery(); // book_master_tbl
+
                     con.Close();
                     Response.Write("<script>alert('Book Deleted Successfully');</script>");
 
@@ -102,8 +113,8 @@ namespace OnlineBookstore
                 try
                 {
 
-                    int actual_stock = Convert.ToInt32(TextBox4.Text.Trim());
-                    int current_stock = Convert.ToInt32(TextBox5.Text.Trim());
+                    int actual_stock = Int32.Parse(TextBox4.Text.Trim());
+                    int current_stock = Int32.Parse(TextBox5.Text.Trim());
 
                     if (global_actual_stock == actual_stock)
                     {
@@ -150,11 +161,10 @@ namespace OnlineBookstore
                     {
                         con.Open();
                     }
-                    SqlCommand cmd = new SqlCommand("UPDATE book_master_tbl set book_name=@book_name, genre=@genre, author_name=@author_name, publisher_name=@publisher_name, publish_date=@publish_date, language=@language, edition=@edition, book_cost=@book_cost, no_of_pages=@no_of_pages, book_description=@book_description, actual_stock=@actual_stock, current_stock=@current_stock, book_img_link=@book_img_link where book_id='" + TextBox1.Text.Trim() + "'", con);
+                    SqlCommand cmd = new SqlCommand("UPDATE book_master_tbl set book_name=@book_name, genre=@genre, publish_date=@publish_date, language=@language, edition=@edition, book_cost=@book_cost, no_of_pages=@no_of_pages, book_description=@book_description, book_img_link=@book_img_link where book_id='" + TextBox1.Text.Trim() + "';", con);
 
                     cmd.Parameters.AddWithValue("@book_name", TextBox2.Text.Trim());
                     cmd.Parameters.AddWithValue("@genre", genres);
-                    cmd.Parameters.AddWithValue("@author_name", DropDownList3.SelectedItem.Value);
                     cmd.Parameters.AddWithValue("@publisher_name", DropDownList2.SelectedItem.Value);
                     cmd.Parameters.AddWithValue("@publish_date", TextBox3.Text.Trim());
                     cmd.Parameters.AddWithValue("@language", DropDownList1.SelectedItem.Value);
@@ -162,12 +172,33 @@ namespace OnlineBookstore
                     cmd.Parameters.AddWithValue("@book_cost", TextBox10.Text.Trim());
                     cmd.Parameters.AddWithValue("@no_of_pages", TextBox11.Text.Trim());
                     cmd.Parameters.AddWithValue("@book_description", TextBox6.Text.Trim());
-                    cmd.Parameters.AddWithValue("@actual_stock", actual_stock.ToString());
-                    cmd.Parameters.AddWithValue("@current_stock", current_stock.ToString());
+
                     cmd.Parameters.AddWithValue("@book_img_link", filepath);
-
-
                     cmd.ExecuteNonQuery();
+
+                    // =====================================
+                    SqlCommand query = new SqlCommand("SELECT author_id FROM book_author WHERE book_id='" + TextBox1.Text.Trim() + "';", con);
+                    SqlDataReader reader = query.ExecuteReader();
+                    String au_id = reader["author_id"].ToString();
+
+                    SqlCommand cmd2 = new SqlCommand("UPDATE book_author set author_id=" + au_id + " where book_id='" + TextBox1.Text.Trim() + "';", con);
+                    cmd2.ExecuteNonQuery();
+
+                    // =====================================
+                    SqlCommand cmd3 = new SqlCommand("UPDATE author_master_tbl set author_name=@author_name where author_id='" + au_id + "';", con);
+                    cmd3.Parameters.AddWithValue("@author_name", DropDownList3.SelectedItem.Value);
+                    cmd3.ExecuteNonQuery();
+
+                    // =====================================
+                    query = new SqlCommand("SELECT stock_id FROM book_stock WHERE book_id='" + TextBox1.Text.Trim() + "';", con);
+                    reader = query.ExecuteReader();
+                    String s_id = reader["stock_id"].ToString();
+
+                    SqlCommand cmd4 = new SqlCommand("UPDATE book_stock set stock_id=" + s_id + ", actual_stock=@actual_stock, current_stock=@current_stock where book_id='" + TextBox1.Text.Trim() + "';", con);
+                    cmd4.Parameters.AddWithValue("@actual_stock", actual_stock.ToString());
+                    cmd4.Parameters.AddWithValue("@current_stock", current_stock.ToString());
+
+
                     con.Close();
                     GridView1.DataBind();
                     Response.Write("<script>alert('Book Updated Successfully');</script>");
@@ -186,7 +217,7 @@ namespace OnlineBookstore
         }
 
 
-        void getBookByID()
+        void getBookByID() //NEED TO FIX
         {
             try
             {
@@ -209,7 +240,7 @@ namespace OnlineBookstore
                     TextBox4.Text = dt.Rows[0]["actual_stock"].ToString().Trim();
                     TextBox5.Text = dt.Rows[0]["current_stock"].ToString().Trim();
                     TextBox6.Text = dt.Rows[0]["book_description"].ToString();
-                    TextBox7.Text = "" + (Convert.ToInt32(dt.Rows[0]["actual_stock"].ToString()) - Convert.ToInt32(dt.Rows[0]["current_stock"].ToString()));
+                    TextBox7.Text = "" + (Int32.Parse(dt.Rows[0]["actual_stock"].ToString()) - Int32.Parse(dt.Rows[0]["current_stock"].ToString()));
 
                     DropDownList1.SelectedValue = dt.Rows[0]["language"].ToString().Trim();
                     DropDownList2.SelectedValue = dt.Rows[0]["publisher_name"].ToString().Trim();
@@ -229,8 +260,8 @@ namespace OnlineBookstore
                         }
                     }
 
-                    global_actual_stock = Convert.ToInt32(dt.Rows[0]["actual_stock"].ToString().Trim());
-                    global_current_stock = Convert.ToInt32(dt.Rows[0]["current_stock"].ToString().Trim());
+                    global_actual_stock = Int32.Parse(dt.Rows[0]["actual_stock"].ToString().Trim());
+                    global_current_stock = Int32.Parse(dt.Rows[0]["current_stock"].ToString().Trim());
                     global_issued_books = global_actual_stock - global_current_stock;
                     global_filepath = dt.Rows[0]["book_img_link"].ToString();
 
@@ -317,17 +348,21 @@ namespace OnlineBookstore
             try
             {
                 string genres = "";
+                int actual_stock = Int32.Parse(TextBox4.Text.Trim()); 
+                int current_stock = Int32.Parse(TextBox5.Text.Trim());
+
                 foreach (int i in ListBox1.GetSelectedIndices())
                 {
                     genres = genres + ListBox1.Items[i] + ",";
                 }
-                // genres = Adventure,Self Help,
+
                 genres = genres.Remove(genres.Length - 1);
 
                 string filepath = "~/book_inventory/books1.png";
-                string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
-                FileUpload1.SaveAs(Server.MapPath("book_inventory/" + filename));
-                filepath = "~/book_inventory/" + filename;
+                filepath = "0";
+                //string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
+                //FileUpload1.SaveAs(Server.MapPath("book_inventory/" + filename));
+                //filepath = "~/book_inventory/" + filename;
 
 
                 SqlConnection con = new SqlConnection(strcon);
@@ -336,28 +371,89 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO book_master_tbl(book_id,book_name,genre,author_name,publisher_name,publish_date,language,edition,book_cost,no_of_pages,book_description,actual_stock,current_stock,book_img_link) values(@book_id,@book_name,@genre,@author_name,@publisher_name,@publish_date,@language,@edition,@book_cost,@no_of_pages,@book_description,@actual_stock,@current_stock,@book_img_link)", con);
+                SqlCommand book_cmd = new SqlCommand("INSERT INTO book_master_tbl(book_id) VALUES(@book_id);", con);
+                book_cmd.Parameters.AddWithValue("@book_id", TextBox1.Text.Trim());
+                book_cmd.ExecuteNonQuery();
+
+                SqlCommand cmd = new SqlCommand("UPDATE book_master_tbl set book_name=@book_name, genre=@genre, publisher_id=@publisher_id, publish_date=@publish_date, language=@language, edition=@edition, book_cost=@book_cost, no_of_pages=@no_of_pages, book_description=@book_description, book_img_link=@book_img_link where book_id=@book_id;", con);
 
                 cmd.Parameters.AddWithValue("@book_id", TextBox1.Text.Trim());
                 cmd.Parameters.AddWithValue("@book_name", TextBox2.Text.Trim());
                 cmd.Parameters.AddWithValue("@genre", genres);
-                cmd.Parameters.AddWithValue("@author_name", DropDownList3.SelectedItem.Value);
-                cmd.Parameters.AddWithValue("@publisher_name", DropDownList2.SelectedItem.Value);
+                cmd.Parameters.AddWithValue("@publisher_id", "test");
                 cmd.Parameters.AddWithValue("@publish_date", TextBox3.Text.Trim());
                 cmd.Parameters.AddWithValue("@language", DropDownList1.SelectedItem.Value);
                 cmd.Parameters.AddWithValue("@edition", TextBox9.Text.Trim());
                 cmd.Parameters.AddWithValue("@book_cost", TextBox10.Text.Trim());
                 cmd.Parameters.AddWithValue("@no_of_pages", TextBox11.Text.Trim());
                 cmd.Parameters.AddWithValue("@book_description", TextBox6.Text.Trim());
-                cmd.Parameters.AddWithValue("@actual_stock", TextBox4.Text.Trim());
-                cmd.Parameters.AddWithValue("@current_stock", TextBox4.Text.Trim());
                 cmd.Parameters.AddWithValue("@book_img_link", filepath);
 
-                cmd.ExecuteNonQuery();
+// ====================================
+                SqlCommand sqlCommand = new SqlCommand("SELECT publisher_id FROM publisher_master_tbl WHERE publisher_name=@publisher_name;", con);
+                sqlCommand.Parameters.AddWithValue("@publisher_name", DropDownList2.SelectedItem.Value);
+                SqlDataReader reader = sqlCommand.ExecuteReader();
+                reader.Read();
+                String p_id = reader[0].ToString();
+
+                SqlCommand cmd1 = new SqlCommand("UPDATE publisher_master_tbl SET publisher_name = @publisher_name, WHERE publisher_id = @publisher_id;", con);
+                cmd1.Parameters.AddWithValue("@publisher_name", DropDownList2.SelectedItem.Value);
+                cmd1.Parameters.AddWithValue("@publisher_id", p_id);
+                reader.Close();
+
+                // =====================================
+                SqlCommand query = new SqlCommand("SELECT author_id FROM author_master_tbl WHERE author_name= @author_name;", con);
+                query.Parameters.AddWithValue("@author_name", DropDownList3.SelectedItem.Value);
+                reader = query.ExecuteReader();
+                reader.Read();
+                String au_id = reader[0].ToString();
+
+                SqlCommand cmd2 = new SqlCommand("INSERT INTO book_author(book_id, author_id) VALUES(@book_id, @author_id);", con);
+                cmd2.Parameters.AddWithValue("@book_id", TextBox1.Text.Trim());
+                cmd2.Parameters.AddWithValue("@author_id", au_id);
+                reader.Close();
+
+// =====================================
+                SqlCommand cmd3 = new SqlCommand("INSERT INTO author_master_tbl(author_id, author_name) VALUES(@author_id, @author_name);", con);
+                cmd3.Parameters.AddWithValue("@author_name", DropDownList3.SelectedItem.Value);
+                cmd3.Parameters.AddWithValue("@author_id", au_id);
+
+// =====================================
+
+                SqlCommand query_count = new SqlCommand("SELECT COUNT(*) FROM book_stock", con);
+                int count = (int)query_count.ExecuteScalar() + 1;
+                String s_id = "s";
+                if (count < 10)
+                {
+                    s_id += "00";
+                    s_id += count.ToString();
+                }
+                else if (count < 100)
+                {
+                    s_id += "0";
+                    s_id += count.ToString();
+                }
+                else
+                {
+                    s_id += count.ToString();
+                }
+
+                SqlCommand cmd4 = new SqlCommand("INSERT INTO book_stock(book_id, stock_id, actual_stock, current_stock) VALUES(@book_id, @stock_id, @actual_stock, @current_stock);", con);
+                cmd4.Parameters.AddWithValue("@book_id", TextBox1.Text.Trim());
+                cmd4.Parameters.AddWithValue("@stock_id", s_id);
+                cmd4.Parameters.AddWithValue("@actual_stock", actual_stock);
+                cmd4.Parameters.AddWithValue("@current_stock", current_stock);
+
+// =====================================
+
+                //cmd3.ExecuteNonQuery(); //author_master_tbl
+                cmd2.ExecuteNonQuery(); //book_author
+                cmd.ExecuteNonQuery(); //book_master_tbl
+                //cmd1.ExecuteNonQuery(); //publisher_master_tbl
+                cmd4.ExecuteNonQuery(); //book_stock
                 con.Close();
                 Response.Write("<script>alert('Book added successfully.');</script>");
                 GridView1.DataBind();
-
             }
             catch (Exception ex)
             {
