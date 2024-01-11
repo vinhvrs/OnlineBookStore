@@ -321,7 +321,7 @@ namespace OnlineBookstore
                 DropDownList3.DataValueField = "author_name";
                 DropDownList3.DataBind();
 
-                cmd = new SqlCommand("SELECT publisher_name from publisher_master_table;", con);
+                cmd = new SqlCommand("SELECT publisher_name from publisher_master_tbl;", con);
                 da = new SqlDataAdapter(cmd);
                 dt = new DataTable();
                 da.Fill(dt);

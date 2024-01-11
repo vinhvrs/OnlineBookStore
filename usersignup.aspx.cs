@@ -105,7 +105,6 @@ namespace OnlineBookstore
                 cmd2.Parameters.AddWithValue("@city", TextBox6.Text.Trim());
                 cmd2.Parameters.AddWithValue("@full_address", TextBox5.Text.Trim());
                 cmd2.ExecuteNonQuery();
-                Console.Write("FUCK THIS LINE");
                 con.Close();
                 Response.Write("<script>alert('Sign Up Successful. Go to User Login to Login');</script>");
                 Response.Redirect("userlogin.aspx");
@@ -115,5 +114,6 @@ namespace OnlineBookstore
                 Response.Write("<script>alert('" + ex.Message + "');</script>");
             }
         }
+
     }
 }
