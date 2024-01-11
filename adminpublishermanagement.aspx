@@ -77,7 +77,7 @@
                             </div>
                         </div>
                   <div class="row">
-                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:con  %>" SelectCommand="SELECT * FROM [publisher_master_tbl]"></asp:SqlDataSource>
+                     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:con  %>" SelectCommand="SELECT * FROM [publisher]"></asp:SqlDataSource>
                      <div class="col">
                         <asp:GridView class="table table-striped table-bordered" ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="publisher_id" DataSourceID="SqlDataSource1">
                            <Columns>

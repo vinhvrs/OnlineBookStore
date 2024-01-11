@@ -52,13 +52,13 @@
 								<div class="col-md-6">
 									<label>Member Name</label>
 									<div class="form-group">
-										<asp:TextBox CssClass="form-control" ID="TextBox3" runat="server" placeholder="Member Name" ReadOnly="True" OnTextChanged="TextBox3_TextChanged"></asp:TextBox>
+										<asp:TextBox CssClass="form-control" ID="TextBox3" runat="server" placeholder="Member Name" ReadOnly="True"></asp:TextBox>
 									</div>
 								</div>
 								<div class="col-md-6">
 									<label>Book Name</label>
 									<div class="form-group">
-										<asp:TextBox CssClass="form-control" ID="TextBox4" runat="server" placeholder="Book Name" ReadOnly="True" OnTextChanged="TextBox4_TextChanged"></asp:TextBox>
+										<asp:TextBox CssClass="form-control" ID="TextBox4" runat="server" placeholder="Book Name" ReadOnly="True"></asp:TextBox>
 									</div>
 								</div>
 							</div>
@@ -107,7 +107,7 @@
 											</div>
 										</div>
 										<div class="row">
-											<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:con %>' SelectCommand="SELECT * FROM [book_issue_tbl]">
+											<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:con %>' SelectCommand="SELECT * FROM [book_issue]">
 											</asp:SqlDataSource>
 											<div class="col">
 												<asp:GridView class="table table-striped table-bordered" ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" OnRowDataBound="GridView1_RowDataBound">

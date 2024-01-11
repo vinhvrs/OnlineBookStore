@@ -200,9 +200,9 @@
                         <div class="row">
                             <asp:SqlDataSource ID="SqlDataSource1" runat="server"
                                 ConnectionString="<%$ ConnectionStrings:con %>"
-                                SelectCommand="SELECT b.*, a.author_name, s.current_stock, ba.author_id FROM book_master_tbl b 
+                                SelectCommand="SELECT b.*, a.author_name, s.current_stock, ba.author_id FROM book b 
                    INNER JOIN book_author ba ON b.book_id = ba.book_id 
-                   INNER JOIN author_master_tbl a ON ba.author_id = a.author_id 
+                   INNER JOIN author a ON ba.author_id = a.author_id 
                    LEFT JOIN book_stock s ON b.book_id = s.book_id"></asp:SqlDataSource>
 
                             <div class="col">

@@ -83,13 +83,13 @@ namespace OnlineBookstore
                 }
 
 
-                SqlCommand cmd = new SqlCommand("Delete FROM book_issue_table WHERE book_id='" + TextBox1.Text.Trim() + "' AND member_id='" + TextBox2.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("Delete FROM book_issue WHERE book_id='" + TextBox1.Text.Trim() + "' AND member_id='" + TextBox2.Text.Trim() + "'", con);
                 int result = cmd.ExecuteNonQuery();
 
                 if (result > 0)
                 {
 
-                    cmd = new SqlCommand("update book_master_tbl set current_stock = current_stock+1 WHERE book_id='" + TextBox1.Text.Trim() + "'", con);
+                    cmd = new SqlCommand("update book_stock set current_stock = current_stock+1 WHERE book_id='" + TextBox1.Text.Trim() + "'", con);
                     cmd.ExecuteNonQuery();
                     con.Close();
 
@@ -121,7 +121,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO book_issue_table(member_id,member_name,book_id,book_name,issue_date,due_date) values(@member_id,@member_name,@book_id,@book_name,@issue_date,@due_date)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO book_issue(member_id,member_name,book_id,book_name,issue_date,due_date) values(@member_id,@member_name,@book_id,@book_name,@issue_date,@due_date)", con);
 
                 cmd.Parameters.AddWithValue("@member_id", TextBox2.Text.Trim());
                 cmd.Parameters.AddWithValue("@member_name", TextBox3.Text.Trim());
@@ -132,12 +132,13 @@ namespace OnlineBookstore
 
                 cmd.ExecuteNonQuery();
 
-                cmd = new SqlCommand("update  book_master_tbl set current_stock = current_stock-1 WHERE book_id='" + TextBox1.Text.Trim() + "'", con);
+                cmd = new SqlCommand("update book_stock set current_stock = current_stock-1 WHERE book_id='" + TextBox1.Text.Trim() + "'", con);
 
                 cmd.ExecuteNonQuery();
 
                 con.Close();
                 Response.Write("<script>alert('Book Issued Successfully');</script>");
+                Response.Redirect(Request.RawUrl);
 
                 GridView1.DataBind();
             }
@@ -156,7 +157,7 @@ namespace OnlineBookstore
                 {
                     con.Open();
                 }
-                SqlCommand cmd = new SqlCommand("SELECT * FROM book_master_tbl WHERE book_id='" + TextBox1.Text.Trim() + "' AND current_stock >0", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM book WHERE book_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -185,7 +186,7 @@ namespace OnlineBookstore
                 {
                     con.Open();
                 }
-                SqlCommand cmd = new SqlCommand("SELECT full_name FROM member_master_table WHERE member_id='" + TextBox2.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("SELECT full_name FROM member WHERE member_id='" + TextBox2.Text.Trim() + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -214,7 +215,7 @@ namespace OnlineBookstore
                 {
                     con.Open();
                 }
-                SqlCommand cmd = new SqlCommand("SELECT * FROM book_issue_table WHERE member_id='" + TextBox2.Text.Trim() + "' AND book_id='" + TextBox1.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM book_issue WHERE member_id='" + TextBox2.Text.Trim() + "' AND book_id='" + TextBox1.Text.Trim() + "'", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -246,7 +247,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT book_name FROM book_master_tbl WHERE book_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT book_name FROM book WHERE book_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -259,7 +260,7 @@ namespace OnlineBookstore
                     Response.Write("<script>alert('Wrong Book ID');</script>");
                 }
 
-                SqlCommand cmd2 = new SqlCommand("SELECT full_name FROM member_master_tbl WHERE member_id='" + TextBox2.Text.Trim() + "';", con);
+                SqlCommand cmd2 = new SqlCommand("SELECT full_name FROM member WHERE member_id='" + TextBox2.Text.Trim() + "';", con);
                 da = new SqlDataAdapter(cmd2);
                 dt = new DataTable();
                 da.Fill(dt);
@@ -301,15 +302,6 @@ namespace OnlineBookstore
             }
         }
 
-        //Define
-        protected void TextBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void TextBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+       
     }
 }

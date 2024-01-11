@@ -26,7 +26,7 @@ namespace OnlineBookstore
                 {
                     con.Open();
                 }
-                SqlCommand query = new SqlCommand("select * from admin_login_tbl where username='" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "'", con);
+                SqlCommand query = new SqlCommand("select * from admin where username='" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "'", con);
                 SqlDataReader dr = query.ExecuteReader();
                 if (dr.HasRows)
                 {
