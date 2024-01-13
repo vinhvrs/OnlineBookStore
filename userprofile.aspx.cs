@@ -128,7 +128,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from member where member_id='" + Session["username"].ToString() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM member WHERE member_id='" + Session["username"].ToString() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -182,7 +182,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from book_issue where member_id='" + Session["username"].ToString() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM issue WHERE member_id='" + Session["username"].ToString() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);

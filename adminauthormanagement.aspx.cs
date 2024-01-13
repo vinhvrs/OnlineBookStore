@@ -74,7 +74,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from author where author_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM author WHERE author_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -108,10 +108,9 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("DELETE from author WHERE author_id='" + TextBox1.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("DELETE FROM author WHERE author_id='" + TextBox1.Text.Trim() + "'", con);
+
                 cmd.ExecuteNonQuery();
-
-
                 con.Close();
                 Response.Write("<script>alert('Author Deleted Successfully');</script>");
                 clearForm();
@@ -190,7 +189,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from author where author_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM author WHERE author_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);

@@ -26,7 +26,7 @@ namespace OnlineBookstore
             // Determine alternate view
             AlternateView = isMobile ? "Desktop" : "Mobile";
 
-            // Create switch URL from the route, e.g. ~/__FriendlyUrls_SwitchView/Mobile?ReturnUrl=/Page
+            // Create switch URL FROM the route, e.g. ~/__FriendlyUrls_SwitchView/Mobile?ReturnUrl=/Page
             var switchViewRouteName = "AspNet.FriendlyUrls.SwitchView";
             var switchViewRoute = RouteTable.Routes[switchViewRouteName];
             if (switchViewRoute == null)

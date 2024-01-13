@@ -26,16 +26,18 @@ namespace OnlineBookstore
                 {
                     con.Open();
                 }
-                SqlCommand query = new SqlCommand("select * from admin where username='" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "'", con);
+                SqlCommand query = new SqlCommand("SELECT * FROM admin WHERE admin_id='" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "'", con);
                 SqlDataReader dr = query.ExecuteReader();
                 if (dr.HasRows)
                 {
                     while (dr.Read())
                     {
-                        Response.Write("<script>alert('welcome back, ' + '" + dr.GetValue(2).ToString() + "');</script>");
-                        Session["fullname"] = dr.GetValue(2).ToString();
+                        Response.Write("<script>alert('welcome back, ' + '" + dr.GetValue(1).ToString() + "');</script>");
+                        Session["full_name"] = dr.GetValue(1).ToString();
+                        Session["admin_id"] = dr.GetValue(2).ToString();
                         Session["role"] = "admin";
                     }
+
                     Response.Redirect("homepage.aspx");
 
                 }

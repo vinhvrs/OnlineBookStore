@@ -67,7 +67,7 @@
                                                                             &nbsp;| Publish Date -
                                                                             <asp:Label ID="Label6" runat="server" Font-Bold="True" Text='<%# Eval("publish_date") %>'></asp:Label>
                                                                             &nbsp;| Pages -
-                                                                            <asp:Label ID="Label7" runat="server" Font-Bold="True" Text='<%# Eval("no_of_pages") %>'></asp:Label>
+                                                                            <asp:Label ID="Label7" runat="server" Font-Bold="True" Text='<%# Eval("number_of_page") %>'></asp:Label>
                                                                             &nbsp;| Edition -
                                                                             <asp:Label ID="Label8" runat="server" Font-Bold="True" Text='<%# Eval("edition") %>'></asp:Label>
                                                                         </div>

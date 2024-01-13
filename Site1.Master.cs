@@ -133,7 +133,7 @@ namespace OnlineBookstore
         protected void LinkButton3_Click(object sender, EventArgs e)
         {
             Session["username"] = "";
-            Session["fullname"] = "";
+            Session["full_name"] = "";
             Session["role"] = "";
             Session["status"] = "";
 

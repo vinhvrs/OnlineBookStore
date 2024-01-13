@@ -73,6 +73,7 @@ namespace OnlineBookstore
                 }
 
                 SqlCommand cmd = new SqlCommand("SELECT * FROM publisher WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
+
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -106,23 +107,11 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand query = new SqlCommand("SELECT book_id FROM book WHERE publisher_id='" + TextBox1.Text.Trim() + "';", con);
-                SqlDataAdapter da = new SqlDataAdapter(query);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                SqlCommand cmd = new SqlCommand("DELETE FROM publisher WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
 
-                if (dt.Rows.Count == 0)
-                {
-                    SqlCommand cmd = new SqlCommand("DELETE from publisher WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
-                    cmd.ExecuteNonQuery();
-                    Response.Write("<script>alert('Publisher Deleted Successfully');</script>");
-                }
-                else
-                {
-                    Response.Write("<script>alert('Publisher Cannot Be Deleted Because At Least A Book Has Published By This Publisher');</script>");
-                }
-
+                cmd.ExecuteNonQuery();
                 con.Close();
+                Response.Write("<script>alert('Publisher Deleted Successfully');</script>");
                 clearForm();
                 GridView1.DataBind();
 
@@ -199,7 +188,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from publisher where publisher_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM publisher WHERE publisher_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -228,5 +217,14 @@ namespace OnlineBookstore
             TextBox2.Text = "";
         }
 
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }       
     }
 }
