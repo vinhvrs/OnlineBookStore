@@ -74,14 +74,14 @@ namespace OnlineBookstore
                 cmd.Parameters.AddWithValue("@member_id", TextBox8.Text.Trim());
                 cmd.Parameters.AddWithValue("@password", TextBox9.Text.Trim());
 
-                SqlCommand query = new SqlCommand("INSERT INTO information(member_id,full_name, city, state, full_address ,dob , CCV, contact_number) values(@member_id, @full_name, @city, @state, @full_address , @dob , @CCV, @contact_number)", con);
+                SqlCommand query = new SqlCommand("INSERT INTO information(member_id,full_name, city, state, full_address ,dob , CVV, contact_number) values(@member_id, @full_name, @city, @state, @full_address , @dob , @CVV, @contact_number)", con);
                 query.Parameters.AddWithValue("@member_id", TextBox8.Text.Trim());
                 query.Parameters.AddWithValue("@full_name", TextBox1.Text.Trim());
                 query.Parameters.AddWithValue("@city", TextBox6.Text.Trim());
                 query.Parameters.AddWithValue("@state", DropDownList1.SelectedItem.Value);
                 query.Parameters.AddWithValue("@full_address", TextBox5.Text.Trim());
                 query.Parameters.AddWithValue("@dob", TextBox2.Text.Trim());
-                query.Parameters.AddWithValue("@CCV", TextBox7.Text.Trim());
+                query.Parameters.AddWithValue("@CVV", TextBox7.Text.Trim());
                 query.Parameters.AddWithValue("@contact_number", TextBox3.Text.Trim());
                 //query.Parameters.AddWithValue("@email", TextBox4.Text.Trim());
 

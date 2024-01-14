@@ -32,9 +32,9 @@ namespace OnlineBookstore
                 {
                     while (dr.Read())
                     {
-                        Response.Write("<script>alert('welcome back, ' + '" + dr.GetValue(1).ToString() + "');</script>");
-                        Session["full_name"] = dr.GetValue(1).ToString();
-                        Session["admin_id"] = dr.GetValue(2).ToString();
+                        Response.Write("<script>alert('welcome back, ' + '" + dr.GetValue(2).ToString() + "');</script>");
+                        Session["full_name"] = dr.GetValue(2).ToString();
+                        Session["admin_id"] = dr.GetValue(0).ToString();
                         Session["role"] = "admin";
                     }
 

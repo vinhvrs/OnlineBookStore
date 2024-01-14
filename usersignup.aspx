@@ -135,9 +135,9 @@
                         </div>
                      </div>
                      <div class="col-md-4">
-                        <label>Pincode</label>
+                        <label>CVV</label>
                         <div class="form-group">
-                           <asp:TextBox class="form-control" ID="TextBox7" runat="server" placeholder="Pincode" TextMode="Number"></asp:TextBox>
+                           <asp:TextBox class="form-control" ID="TextBox7" runat="server" placeholder="CVV" TextMode="Number"></asp:TextBox>
                         </div>
                      </div>
                   </div>

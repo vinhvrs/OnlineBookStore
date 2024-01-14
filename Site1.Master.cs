@@ -46,7 +46,7 @@ namespace OnlineBookstore
 
                     LinkButton3.Visible = true; // logout link button
                     LinkButton7.Visible = true; // hello user link button
-                    LinkButton7.Text = "Hello " + Session["username"].ToString();
+                    LinkButton7.Text = "Hello " + Session["member_id"].ToString();
 
 
                     LinkButton6.Visible = true; // admin login link button
