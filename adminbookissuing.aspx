@@ -64,7 +64,7 @@
 							</div>
 							<div class="row">
 								<div class="col-md-6">
-									<label>Issue Date</label>
+									<label>Buy Date</label>
 									<div class="form-group">
 										<asp:TextBox CssClass="form-control" ID="TextBox5" runat="server" placeholder="Start Date" TextMode="Date"></asp:TextBox>
 									</div>
@@ -78,7 +78,7 @@
 							</div>
 							<div class="row">
 								<div class="col-6">
-									<asp:Button ID="Button2" class="btn btn-lg btn-block btn-primary" runat="server" Text="Issue" OnClick="Button2_Click" />
+									<asp:Button ID="Button2" class="btn btn-lg btn-block btn-primary" runat="server" Text="Buy" OnClick="Button2_Click" />
 								</div>
 								<div class="col-6">
 									<asp:Button ID="Button4" class="btn btn-lg btn-block btn-success" runat="server" Text="Return" OnClick="Button4_Click" />
@@ -97,7 +97,7 @@
 									<div class="row">
 										<div class="col">
 											<center>
-												<h4>Issued Book List</h4>
+												<h4>Buyd Book List</h4>
 											</center>
 										</div>
 									</div>
@@ -107,7 +107,7 @@
 											</div>
 										</div>
 										<div class="row">
-											<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:con %>' SelectCommand="SELECT * FROM [book_issue_tbl]">
+											<asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString='<%$ ConnectionStrings:con %>' SelectCommand="SELECT * FROM [Buy]">
 											</asp:SqlDataSource>
 											<div class="col">
 												<asp:GridView class="table table-striped table-bordered" ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" OnRowDataBound="GridView1_RowDataBound">
@@ -116,8 +116,8 @@
 														<asp:BoundField DataField="member_name" HeaderText="Member Name" SortExpression="member_name"></asp:BoundField>
 														<asp:BoundField DataField="book_id" HeaderText="Book ID" SortExpression="book_id"></asp:BoundField>
 														<asp:BoundField DataField="book_name" HeaderText="Book Name" SortExpression="book_name"></asp:BoundField>
-														<asp:BoundField DataField="issue_date" HeaderText="Issue Date" SortExpression="issue_date"></asp:BoundField>
-														<asp:BoundField DataField="due_date" HeaderText="Due Date" SortExpression="due_date"></asp:BoundField>
+														<asp:BoundField DataField="transaction_date" HeaderText="Transaction Date" SortExpression="transaction_date"></asp:BoundField>
+<%--														<asp:BoundField DataField="due_date" HeaderText="Due Date" SortExpression="due_date"></asp:BoundField>--%>
 													</Columns>
 												</asp:GridView>
 											</div>

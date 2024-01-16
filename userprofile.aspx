@@ -15,7 +15,7 @@
                   <div class="row">
                      <div class="col">
                         <center>
-                           <img width="100px" src="imgs/generaluser.png"/>
+                           <img width="100px" src="imgs/generaluser1.png"/>
                         </center>
                      </div>
                   </div>
@@ -141,9 +141,9 @@
                         </div>
                      </div>
                      <div class="col-md-4">
-                        <label>Pincode</label>
+                        <label>CVV</label>
                         <div class="form-group">
-                           <asp:TextBox class="form-control" ID="TextBox7" runat="server" placeholder="Pincode" TextMode="Number"></asp:TextBox>
+                           <asp:TextBox class="form-control" ID="TextBox7" runat="server" placeholder="CVV" TextMode="Number"></asp:TextBox>
                         </div>
                      </div>
                   </div>
