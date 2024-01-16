@@ -74,7 +74,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from author_master_tbl where author_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM author WHERE author_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -108,7 +108,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("DELETE from author_master_tbl WHERE author_id='" + TextBox1.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("DELETE FROM author WHERE author_id='" + TextBox1.Text.Trim() + "'", con);
 
                 cmd.ExecuteNonQuery();
                 con.Close();
@@ -133,7 +133,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("UPDATE author_master_tbl SET author_name=@author_name WHERE author_id='" + TextBox1.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("UPDATE author SET author_name=@author_name WHERE author_id='" + TextBox1.Text.Trim() + "'", con);
 
                 cmd.Parameters.AddWithValue("@author_name", TextBox2.Text.Trim());
 
@@ -160,7 +160,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("INSERT INTO author_master_tbl(author_id,author_name) values(@author_id,@author_name)", con);
+                SqlCommand cmd = new SqlCommand("INSERT INTO author(author_id,author_name) values(@author_id,@author_name)", con);
 
                 cmd.Parameters.AddWithValue("@author_id", TextBox1.Text.Trim());
                 cmd.Parameters.AddWithValue("@author_name", TextBox2.Text.Trim());
@@ -189,7 +189,7 @@ namespace OnlineBookstore
                     con.Open();
                 }
 
-                SqlCommand cmd = new SqlCommand("SELECT * from author_master_tbl where author_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM author WHERE author_id='" + TextBox1.Text.Trim() + "';", con);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);

@@ -19,15 +19,6 @@ namespace OnlineBookstore
 
         }
 
-        protected void TextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void TextBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -38,20 +29,21 @@ namespace OnlineBookstore
                 {
                     con.Open();
                 }
-                SqlCommand query = new SqlCommand("select * from member_master_tbl where member_id='" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("SELECT * FROM information WHERE member_id = '" + TextBox1.Text.Trim() + "';", con);
+                SqlDataReader reader = cmd.ExecuteReader();
+                reader.Read();
+                String name = reader.GetValue(1).ToString();
+                reader.Close();
+
+                SqlCommand query = new SqlCommand("SELECT * FROM member WHERE member_id = '" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "';", con);
                 SqlDataReader dr = query.ExecuteReader();
                 if (dr.HasRows)
                 {
-                    while (dr.Read())
-                    {
-                        //Response.Write("<script>alert('welcome back, ' + '" + dr.GetValue(0).ToString() + "');</script>");
-                        Session["username"] = dr.GetValue(4).ToString();
-                        Session["fullname"] = dr.GetValue(0).ToString();
-                        Session["role"] = "user";
-                        Session["status"] = dr.GetValue(6).ToString();
-                    }
+                    Response.Write("<script>alert('welcome back, ' + '" + name + "');</script>");
+                    Session["member_id"] = TextBox1.Text.Trim();
+                    Session["full_name"] = name;
+                    Session["role"] = "user";
                     Response.Redirect("homepage.aspx");
-                    Response.Write(" < script > alert('homepage.aspx');</ script > ");
                 }
                 else
                 {
@@ -64,7 +56,6 @@ namespace OnlineBookstore
             {
 
             }
-            //Response.Write("<script>alert('Button Click');</script>");
         }
     }
 }
