@@ -11,7 +11,7 @@ namespace OnlineBookstore
 {
 
 
-    public partial class adminbookissuing
+    public partial class adminbookBuying
     {
 
         /// <summary>

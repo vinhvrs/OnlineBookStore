@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 
 namespace OnlineBookstore
 {
-    public partial class adminbookissuing : System.Web.UI.Page
+    public partial class adminbookBuying : System.Web.UI.Page
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
@@ -140,7 +140,7 @@ namespace OnlineBookstore
                 //cmd.ExecuteNonQuery();
 
                 con.Close();
-                Response.Write("<script>alert('Book buyd Successfully');</script>");
+                Response.Write("<script>alert('Book Bought Successfully');</script>");
 
                 GridView1.DataBind();
             }

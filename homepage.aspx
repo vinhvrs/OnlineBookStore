@@ -43,6 +43,7 @@
                         <a href="adminauthormanagement.aspx" style="text-decoration: none; color: #000000">
                             <img width="150px" src="imgs/writer.png" />
                             <h4>Author List</h4>
+                        </a>
                     </center>
                 </div>
             </div>
@@ -59,8 +60,10 @@
 
                 <div class="col-md-4 mx-auto">
                     <center>
-                        <img width="150px" src="imgs/sign-up1.png" />
-                        <h4>Sign Up</h4>
+                        <a href="userprofile.aspx" style="text-decoration: none; color: #000000">
+                            <img width="150px" src="imgs/sign-up1.png" />
+                            <h4>User Profile</h4>
+                        </a>
                 </div>
 
 

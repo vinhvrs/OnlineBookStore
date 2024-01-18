@@ -34,7 +34,7 @@ namespace OnlineBookstore
                     LinkButton11.Visible = false; // author management link button
                     LinkButton12.Visible = false; // publisher management link button
                     LinkButton8.Visible = false; // book inventory link button
-                    LinkButton9.Visible = false; // book issuing link button
+                    LinkButton9.Visible = false; // book Buying link button
                     LinkButton10.Visible = false; // member management link button
 
                 }
@@ -54,7 +54,7 @@ namespace OnlineBookstore
                     LinkButton11.Visible = false; // author management link button
                     LinkButton12.Visible = false; // publisher management link button
                     LinkButton8.Visible = false; // book inventory link button
-                    LinkButton9.Visible = false; // book issuing link button
+                    LinkButton9.Visible = false; // book Buying link button
                 }
                 else if (Session["role"].Equals("admin"))
                 {
@@ -70,7 +70,7 @@ namespace OnlineBookstore
                     LinkButton11.Visible = true; // author management link button
                     LinkButton12.Visible = true; // publisher management link button
                     LinkButton8.Visible = true; // book inventory link button
-                    LinkButton9.Visible = true; // book issuing link button
+                    LinkButton9.Visible = true; // book Buying link button
                 }
             }
             catch (Exception ex)
@@ -106,7 +106,7 @@ namespace OnlineBookstore
 
         protected void LinkButton9_Click(object sender, EventArgs e)
         {
-            Response.Redirect("adminbookissuing.aspx");
+            Response.Redirect("adminbookBuying.aspx");
         }
 
         protected void LinkButton10_Click(object sender, EventArgs e)
@@ -148,7 +148,7 @@ namespace OnlineBookstore
             LinkButton11.Visible = false; // author management link button
             LinkButton12.Visible = false; // publisher management link button
             LinkButton8.Visible = false; // book inventory link button
-            LinkButton9.Visible = false; // book issuing link button
+            LinkButton9.Visible = false; // book Buying link button
             LinkButton10.Visible = false; // member management link button
             // => This will force the website refresh at that moment click on LogOut button
         }

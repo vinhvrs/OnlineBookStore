@@ -208,7 +208,7 @@
                   <div class="row">
                      <div class="col">
                         <center>
-                           <h4>Your Issued Books</h4>
+                           <h4>Your bought Books</h4>
                            <asp:Label class="badge badge-pill badge-info" ID="Label2" runat="server" Text="your books info"></asp:Label>
                         </center>
                      </div>

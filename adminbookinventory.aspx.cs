@@ -15,7 +15,7 @@ namespace OnlineBookstore
     {
         string strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
         //static string global_filepath;
-        //static int global_actual_stock, global_current_stock, global_issued_books;
+        //static int global_actual_stock, global_current_stock, global_bought_books;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -125,14 +125,14 @@ namespace OnlineBookstore
                     //}
                     //else
                     //{
-                    //    if (actual_stock < global_issued_books)
+                    //    if (actual_stock < global_bought_books)
                     //    {
-                    //        Response.Write("<script>alert('Actual Stock value cannot be less than the Issued books');</script>");
+                    //        Response.Write("<script>alert('Actual Stock value cannot be less than the bought books');</script>");
                     //        return;
                     //    }
                     //    else
                     //    {
-                    //        current_stock = actual_stock - global_issued_books;
+                    //        current_stock = actual_stock - global_bought_books;
                     //        TextBox5.Text = "" + current_stock;
                     //    }
                     //}
@@ -286,7 +286,7 @@ namespace OnlineBookstore
 
                     //global_actual_stock = Int32.Parse(dt.Rows[0]["actual_stock"].ToString().Trim());
                     //global_current_stock = Int32.Parse(dt.Rows[0]["current_stock"].ToString().Trim());
-                    //global_issued_books = global_actual_stock - global_current_stock;
+                    //global_bought_books = global_actual_stock - global_current_stock;
                     //global_filepath = dt.Rows[0]["book_img_link"].ToString();
 
                 }

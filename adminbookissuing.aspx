@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="adminbookissuing.aspx.cs" Inherits="OnlineBookstore.adminbookissuing" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="adminbookBuying.aspx.cs" Inherits="OnlineBookstore.adminbookBuying" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
         <script type="text/javascript">
@@ -17,7 +17,7 @@
 						<div class="row">
 							<div class="col">
 								<center>
-									<h4>Book Issuing</h4>
+									<h4>Book Buying</h4>
 								</center>
 							</div>
 						</div>
@@ -97,7 +97,7 @@
 									<div class="row">
 										<div class="col">
 											<center>
-												<h4>Buyd Book List</h4>
+												<h4>Bought Book List</h4>
 											</center>
 										</div>
 									</div>

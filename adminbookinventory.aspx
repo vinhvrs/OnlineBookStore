@@ -152,7 +152,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Issued Books</label>
+                                <label>bought Books</label>
                                 <div class="form-group">
                                     <asp:TextBox CssClass="form-control" ID="TextBox7" runat="server" placeholder="Pages" TextMode="Number" ReadOnly="false"></asp:TextBox>
                                 </div>
